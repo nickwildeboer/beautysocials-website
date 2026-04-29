@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f4cad6" />
+  <title>Team · BeautySocials</title>
+  <meta name="description" content="Marketeers, developers en beauty lovers. Eén missie: social media simpel maken voor de schoonheidsbranche." />
+  <link rel="icon" type="image/png" href="assets/images/logo-bs-roze.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,30..100,0..1;1,9..144,300..900,30..100,0..1&family=Manrope:wght@400..800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <style>
+    /* ============================================================
+       Team-pagina specifieke stijlen
+       ============================================================ */
+
+    /* Hero cluster van team-bubbles */
+    .team-hero .hero-visual {
+      aspect-ratio: 1 / 1;
+      min-height: 460px;
+    }
+
+    .team-cluster {
+      position: absolute;
+      inset: 0;
+    }
+
+    .team-cluster .bubble {
+      position: absolute;
+    }
+
+    .team-cluster .b-1 {
+      width: 46%;
+      height: 46%;
+      top: 4%;
+      left: 12%;
+      --rot: -14deg;
+      z-index: 3;
+    }
+    .team-cluster .b-2 {
+      width: 36%;
+      height: 36%;
+      top: 8%;
+      right: 6%;
+      --rot: 8deg;
+      z-index: 4;
+    }
+    .team-cluster .b-3 {
+      width: 32%;
+      height: 32%;
+      bottom: 12%;
+      left: 4%;
+      --rot: -22deg;
+      z-index: 2;
+    }
+    .team-cluster .b-4 {
+      width: 50%;
+      height: 50%;
+      bottom: 4%;
+      right: 14%;
+      --rot: 6deg;
+      z-index: 5;
+    }
+    .team-cluster .b-5 {
+      width: 22%;
+      height: 22%;
+      top: 44%;
+      left: 38%;
+      --rot: 18deg;
+      z-index: 6;
+    }
+
+    /* Missie sectie */
+    .mission-quote {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(2rem, 5.2vw, 3.85rem);
+      line-height: 1.04;
+      letter-spacing: -0.02em;
+      font-variation-settings: "opsz" 96, "SOFT" 100, "WONK" 1;
+      text-align: center;
+      margin: var(--s-4) auto var(--s-8);
+      max-width: 24ch;
+      color: var(--ink);
+      position: relative;
+    }
+    .mission-quote .glow {
+      color: var(--bs-pink);
+      display: inline-block;
+    }
+
+    .mission-eyebrow-row {
+      display: flex;
+      justify-content: center;
+      margin-bottom: var(--s-2);
+    }
+
+    .mission-paragraphs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--s-7);
+      max-width: 64rem;
+      margin: 0 auto;
+    }
+
+    .mission-paragraphs p {
+      font-size: 1.075rem;
+      line-height: 1.65;
+      color: var(--ink-soft);
+      max-width: 38ch;
+      margin: 0;
+    }
+
+    .mission-paragraphs p:nth-child(2) {
+      justify-self: end;
+    }
+
+    @media (max-width: 720px) {
+      .mission-paragraphs { grid-template-columns: 1fr; gap: var(--s-5); }
+      .mission-paragraphs p:nth-child(2) { justify-self: start; }
+    }
+
+    .mission-bg-bubble {
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      top: -80px;
+      right: -120px;
+      opacity: 0.22;
+      z-index: 0;
+    }
+
+    .mission-bg-bubble-2 {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      bottom: -60px;
+      left: -60px;
+      opacity: 0.18;
+      z-index: 0;
+    }
+
+    /* Werkwijze sectie */
+    .principles {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--s-7);
+      margin-top: var(--s-7);
+    }
+
+    @media (max-width: 880px) {
+      .principles { grid-template-columns: 1fr; gap: var(--s-6); }
+    }
+
+    .principle {
+      display: flex;
+      flex-direction: column;
+      gap: var(--s-3);
+    }
+
+    .principle-marker {
+      width: 72px;
+      height: 72px;
+      position: relative;
+      margin-bottom: var(--s-3);
+    }
+
+    .principle h3 {
+      font-size: clamp(1.5rem, 2.4vw, 1.95rem);
+      margin: 0;
+      color: var(--ink);
+      font-variation-settings: "opsz" 60, "SOFT" 100, "WONK" 1;
+    }
+
+    .principle p {
+      color: var(--ink-soft);
+      font-size: 1rem;
+      line-height: 1.6;
+      max-width: 32ch;
+      margin: 0;
+    }
+
+    /* Team grid en portretten */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--s-8) var(--s-7);
+      margin-top: var(--s-8);
+      max-width: 68rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media (max-width: 720px) {
+      .team-grid { grid-template-columns: 1fr; gap: var(--s-7); }
+    }
+
+    .team-card {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .team-card-inner {
+      display: flex;
+      flex-direction: column;
+      gap: var(--s-3);
+      width: 100%;
+    }
+
+    /* Verticale offsets per kaart voor organisch ritme */
+    .team-grid > .team-card:nth-child(2) .team-card-inner { transform: translateY(56px); }
+    .team-grid > .team-card:nth-child(3) .team-card-inner { transform: translateY(-12px); }
+    .team-grid > .team-card:nth-child(4) .team-card-inner { transform: translateY(40px); }
+
+    @media (max-width: 720px) {
+      .team-grid > .team-card .team-card-inner { transform: none; }
+    }
+
+    .team-portrait {
+      position: relative;
+      aspect-ratio: 1;
+      width: 100%;
+      max-width: 340px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform var(--t-2) var(--ease-out);
+    }
+
+    .team-card:hover .team-portrait {
+      transform: scale(1.025) rotate(-1deg);
+    }
+
+    .team-portrait .bubble {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 32px 48px oklch(0.55 0.18 4 / 0.32));
+    }
+
+    .team-initials {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 500;
+      font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
+      font-size: clamp(3.25rem, 7.5vw, 5.75rem);
+      color: var(--paper);
+      letter-spacing: -0.025em;
+      z-index: 2;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      text-shadow:
+        0 2px 0 oklch(0.45 0.25 0 / 0.18),
+        0 6px 18px oklch(0.40 0.25 0 / 0.45);
+    }
+
+    .team-name {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 500;
+      font-size: clamp(1.45rem, 2.4vw, 1.95rem);
+      font-variation-settings: "opsz" 60, "SOFT" 100, "WONK" 1;
+      color: var(--ink);
+      margin: var(--s-4) 0 0;
+      letter-spacing: -0.012em;
+    }
+
+    .team-role {
+      font-family: var(--font-body);
+      font-size: var(--fs-xs);
+      color: var(--bs-pink-deep);
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .team-quote {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.075rem;
+      color: var(--ink-soft);
+      margin: var(--s-2) 0 0;
+      line-height: 1.45;
+      max-width: 32ch;
+      font-variation-settings: "opsz" 24, "SOFT" 100, "WONK" 1;
+    }
+
+    .team-quote::before {
+      content: "“ ";
+      color: var(--bs-pink);
+      font-weight: 500;
+    }
+    .team-quote::after {
+      content: " ”";
+      color: var(--bs-pink);
+      font-weight: 500;
+    }
+
+    /* Vacancy sectie */
+    .vacancy {
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vacancy h2 {
+      color: var(--paper);
+      margin-bottom: var(--s-4);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-variation-settings: "opsz" 96, "SOFT" 100, "WONK" 1;
+    }
+
+    .vacancy-eyebrow {
+      color: var(--paper);
+      font-weight: 600;
+    }
+
+    .vacancy-eyebrow::before {
+      background: var(--paper);
+    }
+
+    .vacancy p {
+      color: oklch(1 0 0 / 0.88);
+      font-size: 1.125rem;
+      margin: 0 auto var(--s-6);
+      max-width: 52ch;
+      line-height: 1.55;
+    }
+
+    .vacancy-cta {
+      display: flex;
+      gap: var(--s-3);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-paper-ghost {
+      background: transparent;
+      color: var(--paper);
+      border: 1.5px solid var(--paper);
+    }
+    .btn-paper-ghost:hover {
+      background: var(--paper);
+      color: var(--bs-pink);
+      transform: translateY(-2px);
+    }
+
+    .btn-paper {
+      background: var(--paper);
+      color: var(--bs-pink);
+      box-shadow: var(--shadow-2);
+    }
+    .btn-paper:hover {
+      background: var(--ink);
+      color: var(--paper);
+      transform: translateY(-2px) scale(1.015);
+    }
+
+    .vacancy-bubble-1 {
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      top: -60px;
+      left: 6%;
+      opacity: 0.5;
+      z-index: 1;
+    }
+
+    .vacancy-bubble-2 {
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      bottom: 8%;
+      right: 8%;
+      opacity: 0.45;
+      z-index: 1;
+    }
+
+    .vacancy > .wrap {
+      position: relative;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap nav-row">
+      <a class="brand" href="index.html" aria-label="BeautySocials home">
+        <img class="brand-logo" src="assets/images/logo-bs-roze.png" alt="" />
+        <span class="brand-text">beauty<br />socials</span>
+      </a>
+      <nav class="nav-primary" aria-label="Hoofdnavigatie">
+        <a href="tarieven.html">Tarieven</a>
+        <a href="merken.html">Merken</a>
+        <a href="team.html" class="is-active">Team</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="tel:+31742076000" class="btn btn-icon" aria-label="Bel ons">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+          </svg>
+        </a>
+        <a href="#login" class="btn btn-pill">Inloggen</a>
+        <a href="contact.html#trial" class="btn btn-primary" data-magnetic>
+          Test 14 dagen gratis
+          <span class="btn-arrow">→</span>
+        </a>
+        <button class="nav-toggle" aria-label="Menu openen of sluiten" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu" aria-hidden="true">
+    <a href="tarieven.html">Tarieven</a>
+    <a href="merken.html">Merken</a>
+    <a href="team.html">Team</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contact.html">Contact</a>
+    <div class="menu-cta">
+      <a href="#login" class="btn btn-pill">Inloggen</a>
+      <a href="contact.html#trial" class="btn btn-primary">Test 14 dagen gratis</a>
+    </div>
+  </div>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero team-hero" data-hero-enter>
+      <div class="wrap">
+        <div class="hero-grid">
+          <div>
+            <span class="eyebrow hero-eyebrow" data-hero-eyebrow>Achter de schermen</span>
+            <h1 data-hero-title data-split>Marketeers, developers en beauty lovers.</h1>
+            <p class="lead" data-hero-lead>
+              Wij snappen waar jij tegenaan loopt en bieden daar slimme oplossingen voor. Persoonlijk, creatief, gebruiksvriendelijk.
+            </p>
+            <div class="hero-cta" data-hero-cta>
+              <a href="tarieven.html" class="btn btn-primary" data-magnetic>
+                Bekijk de tool
+                <span class="btn-arrow">→</span>
+              </a>
+              <a href="contact.html" class="btn btn-ghost">Neem contact op</a>
+            </div>
+            <div class="hero-meta" data-hero-meta>
+              <span><strong>14</strong> teamleden</span>
+              <span><strong>3</strong> kantoren in Nederland</span>
+              <span><strong>1</strong> missie</span>
+            </div>
+          </div>
+
+          <div class="hero-visual" data-hero-visual aria-hidden="true">
+            <div class="team-cluster">
+              <span class="bubble float-a b-1" data-bubble="blob"></span>
+              <span class="bubble float-b delay-1 b-2" data-bubble="heart"></span>
+              <span class="bubble float-c delay-2 b-3" data-bubble="thumb"></span>
+              <span class="bubble float-a delay-3 b-4" data-bubble="blob"></span>
+              <span class="bubble float-b delay-4 b-5" data-bubble="quote"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MISSIE -->
+    <section class="section bg-paper" style="position: relative; overflow: hidden;">
+      <span class="bubble float-c mission-bg-bubble" data-bubble="quote" style="--rot:-12deg;"></span>
+      <span class="bubble float-a delay-2 mission-bg-bubble-2" data-bubble="heart" style="--rot:14deg;"></span>
+      <div class="wrap" style="position: relative; z-index: 2;">
+        <div class="mission-eyebrow-row">
+          <span class="eyebrow" data-reveal>Missie</span>
+        </div>
+        <h2 class="mission-quote" data-split data-reveal>
+          Een schoonheidssalon hoort niet uren in <span class="glow">Canva</span> te zitten.
+        </h2>
+        <div class="mission-paragraphs" data-reveal-stagger>
+          <p>
+            Een salon-eigenaar is expert in haar vak: huidanalyses, behandelingen, klantgesprekken. Niet in copywriting, niet in plannings-tools, niet in algoritmes. Toch wordt zichtbaarheid op Instagram en Facebook elk jaar belangrijker.
+          </p>
+          <p>
+            Bestaande social-media-planners zijn gebouwd voor marketingbureaus, niet voor de salon zelf. Wij draaien dat om. Elke knop, elke flow en elke post is getoetst bij salon-eigenaren tussen twee behandelingen door.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WERKWIJZE -->
+    <section class="section bg-blush" style="position: relative; overflow: hidden;">
+      <div class="wrap">
+        <div style="display: flex; flex-direction: column; gap: var(--s-3); max-width: 38rem;">
+          <span class="eyebrow" data-reveal>Werkwijze</span>
+          <h2 data-split data-reveal>Drie principes.</h2>
+          <p class="lead" data-reveal>
+            Niet als marketingverhaal, maar als manier waarop wij elke dag werken.
+          </p>
+        </div>
+
+        <div class="principles" data-reveal-stagger>
+          <div class="principle">
+            <div class="principle-marker">
+              <span class="bubble float-a" data-bubble="heart" style="--rot:-8deg; width:100%; height:100%; position:absolute; inset:0;"></span>
+            </div>
+            <h3>Persoonlijk.</h3>
+            <p>
+              Wij praten met salons, niet over salons. Elke feature komt voort uit een echte vraag van een gebruiker, niet uit een marktanalyse op kantoor.
+            </p>
+          </div>
+
+          <div class="principle">
+            <div class="principle-marker">
+              <span class="bubble float-b delay-2" data-bubble="thumb" style="--rot:6deg; width:100%; height:100%; position:absolute; inset:0;"></span>
+            </div>
+            <h3>Creatief.</h3>
+            <p>
+              Onze designers leven voor beauty-content. Iedere post die uit BeautySocials komt voelt salonwaardig, ook als hij in 5 seconden klaarstaat.
+            </p>
+          </div>
+
+          <div class="principle">
+            <div class="principle-marker">
+              <span class="bubble float-c delay-3" data-bubble="blob" style="--rot:-14deg; width:100%; height:100%; position:absolute; inset:0;"></span>
+            </div>
+            <h3>Gebruiksvriendelijk.</h3>
+            <p>
+              Geen handleiding nodig. Inloggen, kiezen, aanpassen, posten. Wie het 1 keer doet, kan het de volgende keer met haar ogen dicht.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <section class="section bg-canvas" style="position: relative; overflow: hidden;">
+      <div class="wrap">
+        <div style="display: flex; flex-direction: column; gap: var(--s-3); max-width: 42rem; margin: 0 auto; text-align: center; align-items: center;">
+          <span class="eyebrow" data-reveal>Mensen</span>
+          <h2 data-split data-reveal>De gezichten achter BeautySocials.</h2>
+          <p class="lead" style="text-align: center; margin: 0 auto;" data-reveal>
+            Een klein team met grote koppen. Hier zijn de mensen die jouw posts elke week scherper maken.
+          </p>
+        </div>
+
+        <div class="team-grid" data-reveal-stagger>
+          <div class="team-card">
+            <div class="team-card-inner">
+              <div class="team-portrait">
+                <span class="bubble" data-bubble="blob" style="--rot:-6deg;"></span>
+                <span class="team-initials" aria-hidden="true">NV</span>
+              </div>
+              <p class="team-role">Founder &amp; CEO</p>
+              <h3 class="team-name">Naomi de Vries</h3>
+              <p class="team-quote">Een hands-on salon-bezoek geeft mij elke keer weer ideeën voor de tool.</p>
+            </div>
+          </div>
+
+          <div class="team-card">
+            <div class="team-card-inner">
+              <div class="team-portrait">
+                <span class="bubble" data-bubble="blob" style="--rot:8deg;"></span>
+                <span class="team-initials" aria-hidden="true">LD</span>
+              </div>
+              <p class="team-role">Head of Design</p>
+              <h3 class="team-name">Liam van Dijk</h3>
+              <p class="team-quote">Een goede post voelt aan als een goede behandeling: precies, rustig en effectief.</p>
+            </div>
+          </div>
+
+          <div class="team-card">
+            <div class="team-card-inner">
+              <div class="team-portrait">
+                <span class="bubble" data-bubble="blob" style="--rot:-12deg;"></span>
+                <span class="team-initials" aria-hidden="true">SE</span>
+              </div>
+              <p class="team-role">Lead Developer</p>
+              <h3 class="team-name">Sara El Idrissi</h3>
+              <p class="team-quote">Code mag prachtig zijn, zolang de gebruiker er niets van merkt.</p>
+            </div>
+          </div>
+
+          <div class="team-card">
+            <div class="team-card-inner">
+              <div class="team-portrait">
+                <span class="bubble" data-bubble="blob" style="--rot:6deg;"></span>
+                <span class="team-initials" aria-hidden="true">BJ</span>
+              </div>
+              <p class="team-role">Content &amp; Community</p>
+              <h3 class="team-name">Britt Janssen</h3>
+              <p class="team-quote">Mijn favoriete posts? Die over de stille uren, vlak voor sluitingstijd.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VACATURE / CTA -->
+    <section class="section bg-deep vacancy">
+      <span class="bubble float-a vacancy-bubble-1" data-bubble="heart" style="--rot:-18deg;"></span>
+      <span class="bubble float-c delay-2 vacancy-bubble-2" data-bubble="thumb" style="--rot:12deg;"></span>
+      <div class="wrap">
+        <span class="eyebrow vacancy-eyebrow" data-reveal>Vacature</span>
+        <h2 data-split data-reveal>We zoeken een Customer Success Manager.</h2>
+        <p data-reveal>
+          Iemand die nieuwe salons aan boord helpt, vragen oppakt en ervoor zorgt dat gebruikers binnen één week zichtbaar zijn op social media. Geen helpdesk-werk, maar echte impact bij de eindgebruiker. Beauty-affiniteit is een pré.
+        </p>
+        <div class="vacancy-cta" data-reveal>
+          <a href="contact.html" class="btn btn-paper-ghost">Bekijk vacature</a>
+          <a href="mailto:arjan@iam-marketing.nl?subject=Open%20sollicitatie%20BeautySocials" class="btn btn-paper" data-magnetic>
+            Stuur open sollicitatie
+            <span class="btn-arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span class="bubble footer-bubble float-c delay-2" data-bubble="blob" style="--rot:-12deg; width:140px; height:140px; top:-60px; right:8%; opacity:0.4;"></span>
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="index.html" aria-label="BeautySocials home">
+            <img class="brand-logo" src="assets/images/logo-bs-roze.png" alt="" />
+            <span class="brand-text" style="color: var(--paper);">beauty<br />socials</span>
+          </a>
+          <p>Dé social media tool voor jouw schoonheidssalon. Slimme posts, kant-en-klare inspiratie, in seconden online.</p>
+          <div class="socials" aria-label="Volg ons">
+            <a href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="#" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.27c-.97 0-1.75-.79-1.75-1.76s.78-1.76 1.75-1.76 1.75.79 1.75 1.76-.78 1.76-1.75 1.76zm13.5 12.27h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7h-3v-11h2.88v1.5h.04c.4-.76 1.38-1.56 2.84-1.56 3.04 0 3.6 2 3.6 4.6v6.46z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Site</h5>
+          <ul>
+            <li><a href="tarieven.html">Tarieven</a></li>
+            <li><a href="merken.html">Merken</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Contact</h5>
+          <ul>
+            <li>Vlierbes 15</li>
+            <li>7559 RM Hengelo</li>
+            <li><a href="mailto:info@beautysocials.nl">info@beautysocials.nl</a></li>
+            <li><a href="tel:+31742076000">+31 (0)74 207 6000</a></li>
+            <li><a href="tel:+31631682662">+31 (0)6 31 68 2662</a></li>
+            <li>Support: <a href="tel:+31742076001">+31 (0)74 207 6001</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Voorwaarden</h5>
+          <ul>
+            <li><a href="#">Algemene voorwaarden</a></li>
+            <li><a href="#">Privacyverklaring</a></li>
+            <li><a href="#">Disclaimer</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="one-liner">Mooi worden van posten. Daar zijn we voor.</p>
+        <span>© 2026 BeautySocials. Alle rechten voorbehouden.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>

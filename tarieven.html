@@ -1,0 +1,780 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f4cad6" />
+  <title>Tarieven · BeautySocials</title>
+  <meta name="description" content="Drie pakketten. Vanaf €35 per maand. 14 dagen gratis proberen." />
+  <link rel="icon" type="image/png" href="assets/images/logo-bs-roze.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,30..100,0..1;1,9..144,300..900,30..100,0..1&family=Manrope:wght@400..800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <style>
+    /* Tarieven-specifieke aanvullingen */
+    .tarieven-hero {
+      padding: calc(var(--s-12) + 2rem) 0 var(--s-9);
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, var(--blush-200) 0%, var(--blush-300) 100%);
+      text-align: center;
+    }
+
+    .tarieven-hero .wrap { position: relative; z-index: 5; }
+
+    .tarieven-hero h1 {
+      max-width: 18ch;
+      margin: 0 auto var(--s-4);
+      font-size: clamp(2.75rem, 7.5vw, 6rem);
+    }
+
+    .tarieven-hero .lead {
+      margin: 0 auto;
+      max-width: 52ch;
+      font-size: clamp(1.05rem, 1.6vw, 1.275rem);
+      text-align: center;
+    }
+
+    .tarieven-hero .eyebrow { justify-content: center; margin-bottom: var(--s-4); }
+    .tarieven-hero .eyebrow {
+      display: inline-flex;
+    }
+
+    .tarieven-section {
+      padding: var(--s-9) 0 var(--s-10);
+      background: var(--blush-300);
+      position: relative;
+    }
+
+    .tarieven-grid {
+      gap: var(--s-5);
+      align-items: stretch;
+      position: relative;
+      z-index: 5;
+    }
+
+    @media (min-width: 921px) {
+      .tarieven-grid {
+        grid-template-columns: 1fr 1.08fr 1fr;
+        gap: var(--s-4);
+      }
+    }
+
+    .tarief {
+      padding: var(--s-7) var(--s-6) var(--s-6);
+      gap: 0;
+    }
+
+    .tarief.is-featured { padding-top: var(--s-8); }
+
+    .tarief-price-amount {
+      font-size: clamp(3.5rem, 6vw, 4.75rem);
+      letter-spacing: -0.02em;
+    }
+
+    .tarief-price-currency {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.5rem;
+      color: var(--ink-soft);
+      align-self: flex-start;
+      margin-top: 0.5rem;
+      font-variation-settings: "opsz" 60;
+    }
+
+    .tarief.is-featured .tarief-price-currency { color: oklch(1 0 0 / 0.78); }
+
+    .tarief-cta {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .tarief.is-featured .tarief-cta {
+      background: var(--paper);
+      color: var(--bs-pink-deep);
+      box-shadow: 0 12px 28px oklch(0 0 0 / 0.18), inset 0 1px 0 oklch(1 0 0 / 0.6);
+    }
+
+    .tarief.is-featured .tarief-cta:hover {
+      background: var(--paper);
+      color: var(--bs-pink-deep);
+      transform: translateY(-2px) scale(1.015);
+      box-shadow: 0 18px 36px oklch(0 0 0 / 0.22), 0 0 50px oklch(0.62 0.23 358 / 0.3);
+    }
+
+    .tarief.is-featured .tarief-cta .btn-arrow { color: var(--bs-pink-deep); }
+
+    .tarief-features-label {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: var(--fs-xs);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: var(--s-3);
+      font-style: normal;
+    }
+
+    .tarief.is-featured .tarief-features-label { color: oklch(1 0 0 / 0.7); }
+
+    .tarief-plus {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+    }
+
+    .tarief-plus svg { width: 100%; height: 100%; display: block; }
+
+    .tarief-meta-row {
+      text-align: center;
+      margin-top: var(--s-6);
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(1rem, 1.3vw, 1.15rem);
+      color: var(--ink-soft);
+      font-variation-settings: "opsz" 30;
+      position: relative;
+      z-index: 5;
+    }
+
+    .featured-bubble-bg {
+      position: absolute;
+      width: 480px;
+      height: 480px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.32;
+      filter: blur(2px) drop-shadow(0 30px 60px oklch(0.55 0.18 4 / 0.32));
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Vergelijkingstabel */
+    .compare-section {
+      padding: var(--s-10) 0;
+    }
+
+    .compare-section .eyebrow { justify-content: center; }
+    .compare-section .compare-head { text-align: center; margin-bottom: var(--s-8); }
+    .compare-section h2 { max-width: 16ch; margin: 0 auto; }
+
+    .compare-table-wrap {
+      max-width: 64rem;
+      margin: 0 auto;
+      overflow-x: auto;
+      padding: 0 var(--s-3);
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.97rem;
+      min-width: 520px;
+    }
+
+    .compare-table thead th {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 500;
+      font-variation-settings: "opsz" 60;
+      font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+      color: var(--bs-pink);
+      padding: var(--s-3) var(--s-3);
+      text-align: center;
+      border-bottom: 1.5px solid oklch(0.55 0.18 4 / 0.25);
+      letter-spacing: -0.01em;
+    }
+
+    .compare-table thead th.compare-feature-col {
+      text-align: left;
+      color: var(--ink-soft);
+      font-style: normal;
+      font-family: var(--font-body);
+      font-size: var(--fs-xs);
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .compare-table thead th.is-feature {
+      color: var(--bs-pink-deep);
+      position: relative;
+    }
+
+    .compare-table thead th.is-feature::after {
+      content: "Meest gekozen";
+      position: absolute;
+      top: -0.4rem;
+      left: 50%;
+      transform: translate(-50%, -100%);
+      font-family: var(--font-body);
+      font-style: normal;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--paper);
+      background: var(--bs-pink);
+      padding: 0.3rem 0.65rem;
+      border-radius: var(--r-pill);
+      white-space: nowrap;
+    }
+
+    .compare-table tbody tr {
+      border-bottom: 1px solid oklch(0.55 0.18 4 / 0.12);
+      transition: background var(--t-1) var(--ease-out);
+    }
+
+    .compare-table tbody tr:hover {
+      background: var(--blush-100);
+    }
+
+    .compare-table td {
+      padding: var(--s-4) var(--s-3);
+      vertical-align: middle;
+    }
+
+    .compare-table td.feature {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .compare-table td.cell {
+      text-align: center;
+      width: 17%;
+    }
+
+    .compare-table td.cell.is-feature {
+      background: oklch(0.62 0.23 358 / 0.05);
+    }
+
+    .compare-table tbody tr:hover td.cell.is-feature {
+      background: oklch(0.62 0.23 358 / 0.08);
+    }
+
+    .compare-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      margin: 0 auto;
+    }
+
+    .compare-mark svg { width: 100%; height: 100%; }
+
+    .compare-empty {
+      display: inline-block;
+      width: 22px;
+      height: 1.5px;
+      background: oklch(0.55 0.18 4 / 0.35);
+      border-radius: 1px;
+      vertical-align: middle;
+    }
+
+    .compare-table tfoot td {
+      padding: var(--s-5) var(--s-3) 0;
+      text-align: center;
+    }
+
+    .compare-table .compare-cta-row .btn {
+      width: 100%;
+      max-width: 200px;
+      margin: 0 auto;
+    }
+
+    /* Conversie CTA */
+    .conversion {
+      background: var(--bs-pink);
+      color: var(--paper);
+      padding: var(--s-10) 0;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .conversion::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 20%, oklch(0.85 0.15 6 / 0.4), transparent 60%),
+                  radial-gradient(ellipse at 80% 80%, oklch(0.45 0.25 0 / 0.4), transparent 60%);
+      pointer-events: none;
+    }
+
+    .conversion .wrap { position: relative; z-index: 5; }
+
+    .conversion h2 {
+      color: var(--paper);
+      max-width: 18ch;
+      margin: 0 auto var(--s-4);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
+    }
+
+    .conversion p {
+      color: oklch(1 0 0 / 0.85);
+      margin: 0 auto var(--s-6);
+      max-width: 50ch;
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      text-align: center;
+    }
+
+    .btn-on-pink {
+      background: var(--paper);
+      color: var(--bs-pink-deep);
+      padding: 1.1rem 2rem;
+      font-size: 1rem;
+      box-shadow: 0 16px 40px oklch(0 0 0 / 0.22), inset 0 1px 0 oklch(1 0 0 / 0.6);
+    }
+
+    .btn-on-pink:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 24px 56px oklch(0 0 0 / 0.28), 0 0 80px oklch(1 0 0 / 0.18);
+      color: var(--bs-pink-deep);
+    }
+
+    .btn-on-pink .btn-arrow { color: var(--bs-pink-deep); }
+
+    /* FAQ-strook */
+    .tarieven-faq {
+      background: var(--blush-200);
+      padding: var(--s-10) 0;
+    }
+
+    .tarieven-faq .faq-head {
+      text-align: center;
+      margin-bottom: var(--s-7);
+    }
+
+    .tarieven-faq .eyebrow { justify-content: center; }
+
+    .tarieven-faq .faq-list {
+      max-width: 56rem;
+      margin: 0 auto;
+    }
+
+    .tarieven-faq .faq-foot {
+      text-align: center;
+      margin-top: var(--s-6);
+    }
+
+    .tarieven-faq .faq-foot a {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-variation-settings: "opsz" 60;
+      font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+      color: var(--bs-pink-deep);
+      border-bottom: 1.5px solid currentColor;
+      padding-bottom: 2px;
+      transition: color var(--t-1) var(--ease-out), transform var(--t-1) var(--ease-out);
+      display: inline-block;
+    }
+
+    .tarieven-faq .faq-foot a:hover {
+      color: var(--bs-pink);
+      transform: translateY(-2px);
+    }
+
+    /* Bubble decor positions */
+    .bubble-tr-hero-1 { width: 110px; height: 110px; top: 22%; left: 8%; --rot: -12deg; }
+    .bubble-tr-hero-2 { width: 86px; height: 86px; top: 60%; right: 10%; --rot: 18deg; }
+    .bubble-tr-hero-3 { width: 64px; height: 64px; top: 36%; right: 22%; --rot: -8deg; opacity: 0.85; }
+
+    .bubble-tr-conv-1 { width: 130px; height: 130px; top: 14%; left: 6%; --rot: -16deg; }
+    .bubble-tr-conv-2 { width: 88px; height: 88px; bottom: 18%; right: 8%; --rot: 22deg; }
+    .bubble-tr-conv-3 { width: 56px; height: 56px; top: 24%; right: 14%; --rot: -8deg; opacity: 0.9; }
+
+    @media (max-width: 880px) {
+      .bubble-tr-hero-1 { width: 70px; height: 70px; top: 14%; }
+      .bubble-tr-hero-2 { width: 56px; height: 56px; }
+      .bubble-tr-hero-3 { display: none; }
+      .bubble-tr-conv-1 { width: 80px; height: 80px; }
+      .bubble-tr-conv-2 { width: 60px; height: 60px; }
+      .bubble-tr-conv-3 { display: none; }
+      .featured-bubble-bg { width: 320px; height: 320px; opacity: 0.22; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap nav-row">
+      <a class="brand" href="index.html" aria-label="BeautySocials home">
+        <img class="brand-logo" src="assets/images/logo-bs-roze.png" alt="" />
+        <span class="brand-text">beauty<br />socials</span>
+      </a>
+      <nav class="nav-primary" aria-label="Hoofdnavigatie">
+        <a href="tarieven.html" class="is-active">Tarieven</a>
+        <a href="merken.html">Merken</a>
+        <a href="team.html">Team</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="tel:+31742076000" class="btn btn-icon" aria-label="Bel ons">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+          </svg>
+        </a>
+        <a href="#login" class="btn btn-pill">Inloggen</a>
+        <a href="contact.html#trial" class="btn btn-primary" data-magnetic>
+          Test 14 dagen gratis
+          <span class="btn-arrow">→</span>
+        </a>
+        <button class="nav-toggle" aria-label="Menu openen of sluiten" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu" aria-hidden="true">
+    <a href="tarieven.html">Tarieven</a>
+    <a href="merken.html">Merken</a>
+    <a href="team.html">Team</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contact.html">Contact</a>
+    <div class="menu-cta">
+      <a href="#login" class="btn btn-pill">Inloggen</a>
+      <a href="contact.html#trial" class="btn btn-primary">Test 14 dagen gratis</a>
+    </div>
+  </div>
+
+  <main>
+    <!-- HERO -->
+    <section class="tarieven-hero" data-hero-enter>
+      <span class="bubble bubble-tr-hero-1 float-a delay-1" data-bubble="heart" data-parallax="0.18" data-hero-visual></span>
+      <span class="bubble bubble-tr-hero-2 float-b delay-2" data-bubble="thumb" data-parallax="0.12" data-hero-visual></span>
+      <span class="bubble bubble-tr-hero-3 float-c delay-3" data-bubble="quote" data-parallax="0.08" data-hero-visual></span>
+      <div class="wrap">
+        <span class="eyebrow" data-hero-eyebrow>Onze menukaart</span>
+        <h1 data-split data-hero-title>Drie smaken. Eén tool.</h1>
+        <p class="lead" data-hero-lead>Je wilt zichtbaar zijn met jouw salon, zonder gedoe. Kies het pakket dat past bij hoe ver jij wilt gaan. Van eenvoudig posten tot volledige ontzorging.</p>
+      </div>
+    </section>
+
+    <!-- TARIEVEN GRID -->
+    <section class="tarieven-section">
+      <span class="bubble featured-bubble-bg float-c delay-2" data-bubble="blob" data-parallax="0.10"></span>
+      <div class="wrap">
+        <div class="tarieven-grid" data-reveal-stagger>
+          <!-- SILK -->
+          <article class="tarief">
+            <div class="tarief-name">Silk</div>
+            <div class="tarief-tagline">Perfect als je gewoon zichtbaar wilt zijn zonder gedoe.</div>
+            <div class="tarief-price">
+              <span class="tarief-price-currency">€</span>
+              <span class="tarief-price-amount">35</span>
+              <span class="tarief-price-period">/ maand</span>
+            </div>
+            <div class="tarief-features-label">Wat zit erin</div>
+            <ul>
+              <li><span class="tarief-plus" data-bubble="plus" aria-hidden="true"></span><span>Toegang tot inhaakkalender</span></li>
+              <li><span class="tarief-plus" data-bubble="plus" aria-hidden="true"></span><span>Kant-en-klare posts per maand</span></li>
+              <li><span class="tarief-plus" data-bubble="plus" aria-hidden="true"></span><span>Posts eenvoudig aanpassen</span></li>
+              <li><span class="tarief-plus" data-bubble="plus" aria-hidden="true"></span><span>Inplannen en posten</span></li>
+              <li><span class="tarief-plus" data-bubble="plus" aria-hidden="true"></span><span>Basis ondersteuning</span></li>
+            </ul>
+            <a href="contact.html#trial" class="btn btn-ghost tarief-cta">Start met Silk</a>
+            <p class="tarief-meta">Laagdrempelig, vanaf de eerste post.</p>
+          </article>
+
+          <!-- SHINE (featured) -->
+          <article class="tarief is-featured">
+            <span class="tarief-badge">Meest gekozen</span>
+            <div class="tarief-name" style="color: var(--paper);">Shine</div>
+            <div class="tarief-tagline">Voor salons die willen groeien en opvallen.</div>
+            <div class="tarief-price">
+              <span class="tarief-price-currency">€</span>
+              <span class="tarief-price-amount">59</span>
+              <span class="tarief-price-period">/ maand</span>
+            </div>
+            <div class="tarief-features-label">Alles van Silk, plus</div>
+            <ul>
+              <li><span class="tarief-plus" data-bubble="plus" aria-hidden="true"></span><span>AI Post Creator (foto's en tekst)</span></li>
+              <li><span class="tarief-plus" data-bubble="plus" aria-hidden="true"></span><span>Meer content per maand</span></li>
+              <li><span class="tarief-plus" data-bubble="plus" aria-hidden="true"></span><span>Toegang tot merkenbibliotheek</span></li>
+              <li><span class="tarief-plus" data-bubble="plus" aria-hidden="true"></span><span>Meer variatie en inspiratie</span></li>
+              <li><span class="tarief-plus" data-bubble="plus" aria-hidden="true"></span><span>Sneller en slimmer werken</span></li>
+            </ul>
+            <a href="contact.html#trial" class="btn tarief-cta">Start met Shine <span class="btn-arrow">→</span></a>
+            <p class="tarief-meta">Onze populairste keuze, voor actieve groeiers.</p>
+          </article>
+
+          <!-- DAIMOND -->
+          <article class="tarief">
+            <div class="tarief-name">Daimond</div>
+            <div class="tarief-tagline">Voor salons die alles eruit willen halen.</div>
+            <div class="tarief-price">
+              <span class="tarief-price-currency">€</span>
+              <span class="tarief-price-amount">89</span>
+              <span class="tarief-price-period">/ maand</span>
+            </div>
+            <div class="tarief-features-label">Alles van Shine, plus</div>
+            <ul>
+              <li><span class="tarief-plus" data-bubble="plus" aria-hidden="true"></span><span>Onbeperkt AI content (video, foto, tekst)</span></li>
+              <li><span class="tarief-plus" data-bubble="plus" aria-hidden="true"></span><span>Premium posts en templates</span></li>
+              <li><span class="tarief-plus" data-bubble="plus" aria-hidden="true"></span><span>Extra inhaakmomenten</span></li>
+              <li><span class="tarief-plus" data-bubble="plus" aria-hidden="true"></span><span>Prioriteit support</span></li>
+              <li><span class="tarief-plus" data-bubble="plus" aria-hidden="true"></span><span>Altijd een stap voor</span></li>
+              <li><span class="tarief-plus" data-bubble="plus" aria-hidden="true"></span><span>Koppeling met Canva</span></li>
+              <li><span class="tarief-plus" data-bubble="plus" aria-hidden="true"></span><span>Extra kanaal: LinkedIn</span></li>
+            </ul>
+            <a href="contact.html#trial" class="btn btn-ghost tarief-cta">Start met Daimond</a>
+            <p class="tarief-meta">Premium, voor de full-power salon.</p>
+          </article>
+        </div>
+        <p class="tarief-meta-row">Alle pakketten 14 dagen gratis. Geen creditcard, geen verplichtingen.</p>
+      </div>
+    </section>
+
+    <!-- VERGELIJKING -->
+    <section class="compare-section bg-paper">
+      <div class="wrap">
+        <div class="compare-head" data-reveal>
+          <span class="eyebrow">In één oogopslag</span>
+          <h2>Wat zit waar in?</h2>
+        </div>
+
+        <div class="compare-table-wrap" data-reveal>
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th class="compare-feature-col" scope="col">Feature</th>
+                <th scope="col">Silk</th>
+                <th scope="col" class="is-feature">Shine</th>
+                <th scope="col">Daimond</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="feature">Inhaakkalender met posts</td>
+                <td class="cell"><span class="compare-mark" data-bubble="plus" aria-label="Ja"></span></td>
+                <td class="cell is-feature"><span class="compare-mark" data-bubble="plus" aria-label="Ja"></span></td>
+                <td class="cell"><span class="compare-mark" data-bubble="plus" aria-label="Ja"></span></td>
+              </tr>
+              <tr>
+                <td class="feature">Posts aanpassen en inplannen</td>
+                <td class="cell"><span class="compare-mark" data-bubble="plus" aria-label="Ja"></span></td>
+                <td class="cell is-feature"><span class="compare-mark" data-bubble="plus" aria-label="Ja"></span></td>
+                <td class="cell"><span class="compare-mark" data-bubble="plus" aria-label="Ja"></span></td>
+              </tr>
+              <tr>
+                <td class="feature">Basis ondersteuning</td>
+                <td class="cell"><span class="compare-mark" data-bubble="plus" aria-label="Ja"></span></td>
+                <td class="cell is-feature"><span class="compare-mark" data-bubble="plus" aria-label="Ja"></span></td>
+                <td class="cell"><span class="compare-mark" data-bubble="plus" aria-label="Ja"></span></td>
+              </tr>
+              <tr>
+                <td class="feature">AI Post Creator (foto, tekst)</td>
+                <td class="cell"><span class="compare-empty" aria-label="Niet inbegrepen"></span></td>
+                <td class="cell is-feature"><span class="compare-mark" data-bubble="plus" aria-label="Ja"></span></td>
+                <td class="cell"><span class="compare-mark" data-bubble="plus" aria-label="Ja"></span></td>
+              </tr>
+              <tr>
+                <td class="feature">Merkenbibliotheek</td>
+                <td class="cell"><span class="compare-empty" aria-label="Niet inbegrepen"></span></td>
+                <td class="cell is-feature"><span class="compare-mark" data-bubble="plus" aria-label="Ja"></span></td>
+                <td class="cell"><span class="compare-mark" data-bubble="plus" aria-label="Ja"></span></td>
+              </tr>
+              <tr>
+                <td class="feature">Onbeperkt AI (video, foto, tekst)</td>
+                <td class="cell"><span class="compare-empty" aria-label="Niet inbegrepen"></span></td>
+                <td class="cell is-feature"><span class="compare-empty" aria-label="Niet inbegrepen"></span></td>
+                <td class="cell"><span class="compare-mark" data-bubble="plus" aria-label="Ja"></span></td>
+              </tr>
+              <tr>
+                <td class="feature">Premium posts en templates</td>
+                <td class="cell"><span class="compare-empty" aria-label="Niet inbegrepen"></span></td>
+                <td class="cell is-feature"><span class="compare-empty" aria-label="Niet inbegrepen"></span></td>
+                <td class="cell"><span class="compare-mark" data-bubble="plus" aria-label="Ja"></span></td>
+              </tr>
+              <tr>
+                <td class="feature">Extra inhaakmomenten</td>
+                <td class="cell"><span class="compare-empty" aria-label="Niet inbegrepen"></span></td>
+                <td class="cell is-feature"><span class="compare-empty" aria-label="Niet inbegrepen"></span></td>
+                <td class="cell"><span class="compare-mark" data-bubble="plus" aria-label="Ja"></span></td>
+              </tr>
+              <tr>
+                <td class="feature">Prioriteit support</td>
+                <td class="cell"><span class="compare-empty" aria-label="Niet inbegrepen"></span></td>
+                <td class="cell is-feature"><span class="compare-empty" aria-label="Niet inbegrepen"></span></td>
+                <td class="cell"><span class="compare-mark" data-bubble="plus" aria-label="Ja"></span></td>
+              </tr>
+              <tr>
+                <td class="feature">Koppeling met Canva</td>
+                <td class="cell"><span class="compare-empty" aria-label="Niet inbegrepen"></span></td>
+                <td class="cell is-feature"><span class="compare-empty" aria-label="Niet inbegrepen"></span></td>
+                <td class="cell"><span class="compare-mark" data-bubble="plus" aria-label="Ja"></span></td>
+              </tr>
+              <tr>
+                <td class="feature">Extra kanaal LinkedIn</td>
+                <td class="cell"><span class="compare-empty" aria-label="Niet inbegrepen"></span></td>
+                <td class="cell is-feature"><span class="compare-empty" aria-label="Niet inbegrepen"></span></td>
+                <td class="cell"><span class="compare-mark" data-bubble="plus" aria-label="Ja"></span></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr class="compare-cta-row">
+                <td></td>
+                <td><a href="contact.html#trial" class="btn btn-ghost btn-pill">Kies Silk</a></td>
+                <td><a href="contact.html#trial" class="btn btn-primary btn-pill">Kies Shine</a></td>
+                <td><a href="contact.html#trial" class="btn btn-ghost btn-pill">Kies Daimond</a></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONVERSIE BALK -->
+    <section class="conversion">
+      <span class="bubble bubble-tr-conv-1 float-a delay-2" data-bubble="heart" data-parallax="0.16"></span>
+      <span class="bubble bubble-tr-conv-2 float-b delay-1" data-bubble="blob" data-parallax="0.12"></span>
+      <span class="bubble bubble-tr-conv-3 float-c delay-3" data-bubble="thumb" data-parallax="0.10"></span>
+      <div class="wrap" data-reveal>
+        <h2>14 dagen gratis. Daarna jij beslist.</h2>
+        <p>Opzeggen kan altijd, met 2 maanden opzegtermijn. Geen creditcard nodig om te beginnen.</p>
+        <a href="contact.html#trial" class="btn btn-on-pink" data-magnetic>
+          Start je trial
+          <span class="btn-arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- FAQ STROOK -->
+    <section class="tarieven-faq">
+      <div class="wrap">
+        <div class="faq-head" data-reveal>
+          <span class="eyebrow">Veel gevraagd</span>
+          <h2>Vragen over de tarieven?</h2>
+        </div>
+
+        <div class="faq-list" data-reveal>
+          <details class="faq-item">
+            <summary class="faq-summary">
+              Zit ik ergens aan vast?
+              <span class="faq-toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-body">
+              <p>Nee. Je probeert BeautySocials eerst 14 dagen gratis. Daarna kies je zelf of je doorgaat. Abonnementen hebben een opzegtermijn van 2 maanden en zijn altijd op te zeggen.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-summary">
+              Wat kost het?
+              <span class="faq-toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-body">
+              <p>De eerste 14 dagen zijn gratis. Daarna start je vanaf €35 per maand met Silk, €59 met Shine of €89 met Daimond. Welk pakket past, hangt af van hoeveel content en automatisering je wilt.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-summary">
+              Hoe werkt de gratis trial?
+              <span class="faq-toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-body">
+              <p>Je start direct met volledige toegang tot een pakket naar keuze. Geen creditcard, geen automatische verlenging. Aan het einde van de 14 dagen kies je zelf of je verder gaat.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-summary">
+              Kan ik tussendoor wisselen tussen pakketten?
+              <span class="faq-toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-body">
+              <p>Ja. Wil je upgraden van Silk naar Shine of Daimond? Dat doe je direct in je dashboard. Een downgrade gaat in vanaf de eerstvolgende maand.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary class="faq-summary">
+              Kan ik met één account meerdere salons beheren?
+              <span class="faq-toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-body">
+              <p>Voor één salon werk je vanuit één abonnement. Heb je meerdere vestigingen? Neem contact op, dan kijken we samen naar een passende oplossing voor jouw groep.</p>
+            </div>
+          </details>
+        </div>
+
+        <p class="faq-foot">
+          <a href="faq.html">Bekijk alle vragen <span aria-hidden="true">→</span></a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span class="bubble footer-bubble float-c delay-2" data-bubble="blob" style="--rot:-12deg; width:140px; height:140px; top:-60px; right:8%; opacity:0.4;"></span>
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="index.html" aria-label="BeautySocials home">
+            <img class="brand-logo" src="assets/images/logo-bs-roze.png" alt="" />
+            <span class="brand-text" style="color: var(--paper);">beauty<br />socials</span>
+          </a>
+          <p>Dé social media tool voor jouw schoonheidssalon. Slimme posts, kant-en-klare inspiratie, in seconden online.</p>
+          <div class="socials" aria-label="Volg ons">
+            <a href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="#" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.27c-.97 0-1.75-.79-1.75-1.76s.78-1.76 1.75-1.76 1.75.79 1.75 1.76-.78 1.76-1.75 1.76zm13.5 12.27h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7h-3v-11h2.88v1.5h.04c.4-.76 1.38-1.56 2.84-1.56 3.04 0 3.6 2 3.6 4.6v6.46z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Site</h5>
+          <ul>
+            <li><a href="tarieven.html">Tarieven</a></li>
+            <li><a href="merken.html">Merken</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Contact</h5>
+          <ul>
+            <li>Vlierbes 15</li>
+            <li>7559 RM Hengelo</li>
+            <li><a href="mailto:info@beautysocials.nl">info@beautysocials.nl</a></li>
+            <li><a href="tel:+31742076000">+31 (0)74 207 6000</a></li>
+            <li><a href="tel:+31631682662">+31 (0)6 31 68 2662</a></li>
+            <li>Support: <a href="tel:+31742076001">+31 (0)74 207 6001</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Voorwaarden</h5>
+          <ul>
+            <li><a href="#">Algemene voorwaarden</a></li>
+            <li><a href="#">Privacyverklaring</a></li>
+            <li><a href="#">Disclaimer</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="one-liner">Mooi worden van posten. Daar zijn we voor.</p>
+        <span>© 2026 BeautySocials. Alle rechten voorbehouden.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>

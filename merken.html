@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f4cad6" />
+  <title>Voor merken · BeautySocials</title>
+  <meta name="description" content="Jouw merk zichtbaar via honderden salons. Geen advertentiebudget, wel impact." />
+  <link rel="icon" type="image/png" href="assets/images/logo-bs-roze.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,30..100,0..1;1,9..144,300..900,30..100,0..1&family=Manrope:wght@400..800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <style>
+    /* Pagina-specifieke uitbreidingen voor merken-pagina */
+
+    /* Hero netwerk-diagram */
+    .merken-hero {
+      padding: calc(var(--s-12) + 2rem) 0 var(--s-11);
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, var(--blush-200) 0%, var(--blush-300) 100%);
+    }
+
+    .merken-hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: var(--s-7);
+      align-items: center;
+      position: relative;
+      z-index: 5;
+    }
+
+    @media (max-width: 880px) {
+      .merken-hero-grid { grid-template-columns: 1fr; gap: var(--s-6); }
+    }
+
+    .network {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1.05;
+      max-width: 560px;
+      margin-left: auto;
+    }
+
+    .network svg.network-lines {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .network-node {
+      position: absolute;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .network-label {
+      position: absolute;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: var(--fs-xs);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: var(--paper);
+      padding: 0.35rem 0.7rem;
+      border-radius: var(--r-pill);
+      box-shadow: var(--shadow-1);
+      z-index: 3;
+      white-space: nowrap;
+    }
+
+    /* 10-redenen editorial grid */
+    .reasons {
+      padding: var(--s-11) 0;
+      position: relative;
+    }
+
+    .reasons-head {
+      max-width: 880px;
+      margin: 0 auto var(--s-9);
+      text-align: left;
+    }
+
+    .reasons-head h2 {
+      font-size: clamp(2.5rem, 5.6vw, 4.25rem);
+      max-width: 18ch;
+      margin-bottom: 0;
+    }
+
+    .reasons-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-auto-rows: minmax(180px, auto);
+      gap: var(--s-5) var(--s-6);
+      position: relative;
+    }
+
+    .reason {
+      grid-column: span 6;
+      padding: var(--s-5) 0;
+      border-top: 1px solid oklch(0.55 0.18 4 / 0.25);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .reason-num {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 500;
+      font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
+      color: var(--bs-pink);
+      line-height: 0.85;
+      letter-spacing: -0.04em;
+      margin-bottom: var(--s-4);
+    }
+
+    .reason-title {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 500;
+      font-variation-settings: "opsz" 60, "SOFT" 100, "WONK" 1;
+      color: var(--ink);
+      letter-spacing: -0.015em;
+      line-height: 1.05;
+      margin-bottom: var(--s-3);
+    }
+
+    .reason-text {
+      color: var(--ink-soft);
+      font-size: 0.97rem;
+      line-height: 1.55;
+      margin: 0;
+      max-width: 32ch;
+    }
+
+    /* Asymmetrisch ritme · editorial spread */
+    .reason-1 { grid-column: span 7; }
+    .reason-1 .reason-num { font-size: clamp(5rem, 10vw, 8.5rem); }
+    .reason-1 .reason-title { font-size: clamp(1.75rem, 2.8vw, 2.5rem); max-width: 14ch; }
+
+    .reason-2 { grid-column: span 5; }
+    .reason-2 .reason-num { font-size: clamp(3.5rem, 6vw, 5rem); }
+    .reason-2 .reason-title { font-size: clamp(1.4rem, 2vw, 1.75rem); }
+
+    .reason-3 { grid-column: span 4; }
+    .reason-3 .reason-num { font-size: clamp(3rem, 5vw, 4.25rem); }
+    .reason-3 .reason-title { font-size: clamp(1.3rem, 1.85vw, 1.55rem); }
+
+    .reason-4 { grid-column: span 8; }
+    .reason-4 .reason-num { font-size: clamp(4.5rem, 8.5vw, 7rem); }
+    .reason-4 .reason-title { font-size: clamp(1.65rem, 2.5vw, 2.25rem); max-width: 18ch; }
+
+    .reason-5 { grid-column: span 6; }
+    .reason-5 .reason-num { font-size: clamp(3.5rem, 6vw, 5rem); }
+    .reason-5 .reason-title { font-size: clamp(1.5rem, 2.2vw, 1.95rem); }
+
+    .reason-6 { grid-column: span 6; }
+    .reason-6 .reason-num { font-size: clamp(3.5rem, 6vw, 5rem); }
+    .reason-6 .reason-title { font-size: clamp(1.5rem, 2.2vw, 1.95rem); }
+
+    .reason-7 { grid-column: span 5; }
+    .reason-7 .reason-num { font-size: clamp(3.5rem, 6vw, 5rem); }
+    .reason-7 .reason-title { font-size: clamp(1.4rem, 2vw, 1.75rem); }
+
+    .reason-8 { grid-column: span 7; }
+    .reason-8 .reason-num { font-size: clamp(4rem, 7.5vw, 6rem); }
+    .reason-8 .reason-title { font-size: clamp(1.6rem, 2.3vw, 2.1rem); }
+
+    .reason-9 { grid-column: span 4; }
+    .reason-9 .reason-num { font-size: clamp(3rem, 5vw, 4.25rem); }
+    .reason-9 .reason-title { font-size: clamp(1.3rem, 1.85vw, 1.55rem); }
+
+    .reason-10 { grid-column: span 8; }
+    .reason-10 .reason-num { font-size: clamp(4.5rem, 8vw, 6.75rem); }
+    .reason-10 .reason-title { font-size: clamp(1.65rem, 2.5vw, 2.25rem); max-width: 16ch; }
+
+    @media (max-width: 880px) {
+      .reasons-grid { grid-template-columns: repeat(6, 1fr); gap: var(--s-4); }
+      .reason,
+      .reason-1, .reason-2, .reason-3, .reason-4, .reason-5,
+      .reason-6, .reason-7, .reason-8, .reason-9, .reason-10 {
+        grid-column: span 6;
+      }
+    }
+
+    /* Wat levert het op · bubble outcome list */
+    .outcomes {
+      padding: var(--s-11) 0;
+      background: var(--blush-300);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .outcomes-head {
+      max-width: 880px;
+      margin: 0 auto var(--s-8);
+    }
+
+    .outcomes-list {
+      display: grid;
+      gap: var(--s-5);
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    .outcome {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: var(--s-5);
+      align-items: center;
+      padding: var(--s-5) 0;
+      border-bottom: 1px solid oklch(0.55 0.18 4 / 0.22);
+    }
+
+    .outcome:last-child { border-bottom: 0; }
+
+    .outcome-bubble {
+      width: 80px;
+      height: 80px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .outcome-bubble [data-bubble] {
+      position: absolute;
+      inset: 0;
+      filter: drop-shadow(0 14px 26px oklch(0.55 0.18 4 / 0.28));
+    }
+
+    .outcome-text {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 500;
+      font-size: clamp(2rem, 4.5vw, 3.25rem);
+      font-variation-settings: "opsz" 96, "SOFT" 100, "WONK" 1;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    .outcomes-coda {
+      margin-top: var(--s-7);
+      text-align: center;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-variation-settings: "opsz" 72, "SOFT" 100, "WONK" 1;
+      color: var(--bs-pink-deep);
+    }
+
+    .outcomes-coda strong {
+      color: var(--bs-pink);
+      font-weight: 500;
+    }
+
+    /* Hoeveel salons */
+    .reach {
+      padding: var(--s-11) 0;
+      position: relative;
+    }
+
+    .reach-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s-9);
+      align-items: center;
+    }
+
+    @media (max-width: 880px) {
+      .reach-grid { grid-template-columns: 1fr; gap: var(--s-7); }
+    }
+
+    .reach-text h2 { font-size: clamp(2.25rem, 4.5vw, 3.5rem); max-width: 14ch; }
+    .reach-text p {
+      color: var(--ink-soft);
+      font-size: 1.05rem;
+      max-width: 42ch;
+    }
+
+    .reach-figure {
+      position: relative;
+      padding: var(--s-7);
+      background: var(--paper);
+      border-radius: var(--r-xl);
+      box-shadow: var(--shadow-2);
+      overflow: hidden;
+    }
+
+    .reach-number {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 500;
+      font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
+      font-size: clamp(7rem, 18vw, 14rem);
+      line-height: 0.85;
+      letter-spacing: -0.05em;
+      color: var(--bs-pink);
+      margin-bottom: var(--s-3);
+    }
+
+    .reach-label {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: var(--fs-xs);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: var(--s-5);
+    }
+
+    .reach-trend {
+      display: flex;
+      align-items: center;
+      gap: var(--s-3);
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.25rem;
+      color: var(--ink);
+    }
+
+    .reach-bar {
+      display: flex;
+      gap: 6px;
+      align-items: flex-end;
+      height: 56px;
+      margin: var(--s-5) 0 var(--s-4);
+    }
+
+    .reach-bar span {
+      width: 100%;
+      background: linear-gradient(180deg, var(--bs-pink) 0%, var(--bs-pink-soft) 100%);
+      border-radius: 4px 4px 0 0;
+      display: block;
+    }
+
+    .reach-bar span:nth-child(1) { height: 28%; }
+    .reach-bar span:nth-child(2) { height: 38%; }
+    .reach-bar span:nth-child(3) { height: 50%; }
+    .reach-bar span:nth-child(4) { height: 64%; }
+    .reach-bar span:nth-child(5) { height: 78%; }
+    .reach-bar span:nth-child(6) { height: 92%; }
+    .reach-bar span:nth-child(7) { height: 100%; }
+
+    .reach-bar-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: var(--fs-xs);
+      color: var(--mute);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* Contact CTA */
+    .merken-cta {
+      padding: var(--s-11) 0;
+      background: var(--bs-pink);
+      color: var(--paper);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .merken-cta h2 {
+      color: var(--paper);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      max-width: 18ch;
+      margin: 0 auto var(--s-4);
+      font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
+    }
+
+    .merken-cta p {
+      color: oklch(1 0 0 / 0.85);
+      font-size: 1.15rem;
+      max-width: 44ch;
+      margin: 0 auto var(--s-6);
+    }
+
+    .merken-cta .btn-primary {
+      background: var(--paper);
+      color: var(--bs-pink-deep);
+    }
+
+    .merken-cta .btn-primary:hover {
+      background: var(--paper);
+      color: var(--bs-pink-deep);
+      box-shadow: 0 28px 60px oklch(0 0 0 / 0.18), 0 0 50px oklch(1 0 0 / 0.3), inset 0 1px 0 oklch(1 0 0 / 0.6);
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap nav-row">
+      <a class="brand" href="index.html" aria-label="BeautySocials home">
+        <img class="brand-logo" src="assets/images/logo-bs-roze.png" alt="" />
+        <span class="brand-text">beauty<br />socials</span>
+      </a>
+      <nav class="nav-primary" aria-label="Hoofdnavigatie">
+        <a href="tarieven.html">Tarieven</a>
+        <a href="merken.html" class="is-active">Merken</a>
+        <a href="team.html">Team</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="tel:+31742076000" class="btn btn-icon" aria-label="Bel ons">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+          </svg>
+        </a>
+        <a href="#login" class="btn btn-pill">Inloggen</a>
+        <a href="contact.html#trial" class="btn btn-primary" data-magnetic>
+          Test 14 dagen gratis
+          <span class="btn-arrow">→</span>
+        </a>
+        <button class="nav-toggle" aria-label="Menu openen of sluiten" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu" aria-hidden="true">
+    <a href="tarieven.html">Tarieven</a>
+    <a href="merken.html">Merken</a>
+    <a href="team.html">Team</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contact.html">Contact</a>
+    <div class="menu-cta">
+      <a href="#login" class="btn btn-pill">Inloggen</a>
+      <a href="contact.html#trial" class="btn btn-primary">Test 14 dagen gratis</a>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="merken-hero" data-hero-enter>
+      <span class="bubble float-c delay-3" data-bubble="blob" data-parallax="0.18" style="--rot:-14deg; width:280px; height:280px; top:8%; left:-80px; opacity:0.55;"></span>
+      <span class="bubble float-a delay-2" data-bubble="quote" data-parallax="0.1" style="--rot:8deg; width:120px; height:120px; bottom:14%; left:42%; opacity:0.85;"></span>
+
+      <div class="wrap merken-hero-grid">
+        <div>
+          <span class="eyebrow" data-hero-eyebrow>Voor merken</span>
+          <h1 data-hero-title data-split>De salon als ambassadeur van jouw merk.</h1>
+          <p class="lead" data-hero-lead>
+            BeautySocials geeft jouw merk een directe plek in de contentbibliotheek van honderden salons. Eén keer aanleveren, en vakprofessionals zetten jouw posts wekelijks live op Instagram, Facebook en LinkedIn. Zonder advertentiebudget, altijd on-brand.
+          </p>
+          <div class="hero-cta" data-hero-cta>
+            <a href="contact.html#merken" class="btn btn-primary" data-magnetic>
+              Plan een gesprek
+              <span class="btn-arrow">→</span>
+            </a>
+            <a href="tarieven.html" class="btn btn-ghost">Bekijk pakketten</a>
+          </div>
+          <div class="hero-meta" data-hero-meta>
+            <span><strong>Honderden</strong> salons in het netwerk</span>
+            <span><strong>Geen</strong> advertentiebudget</span>
+            <span><strong>100%</strong> on-brand</span>
+          </div>
+        </div>
+
+        <div data-hero-visual>
+          <div class="network" aria-hidden="true">
+            <!-- Verbindingslijnen -->
+            <svg class="network-lines" viewBox="0 0 500 525" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="line-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="oklch(0.62 0.23 358 / 0.55)" />
+                  <stop offset="100%" stop-color="oklch(0.62 0.23 358 / 0.15)" />
+                </linearGradient>
+              </defs>
+              <!-- merk → salons -->
+              <path d="M250 110 C 200 160, 100 180, 70 210" stroke="url(#line-grad)" stroke-width="1.4" fill="none" stroke-dasharray="3 5" />
+              <path d="M250 110 C 220 165, 165 195, 158 220" stroke="url(#line-grad)" stroke-width="1.4" fill="none" stroke-dasharray="3 5" />
+              <path d="M250 110 C 250 170, 246 200, 246 225" stroke="url(#line-grad)" stroke-width="1.4" fill="none" stroke-dasharray="3 5" />
+              <path d="M250 110 C 280 165, 335 195, 342 220" stroke="url(#line-grad)" stroke-width="1.4" fill="none" stroke-dasharray="3 5" />
+              <path d="M250 110 C 305 165, 395 185, 425 215" stroke="url(#line-grad)" stroke-width="1.4" fill="none" stroke-dasharray="3 5" />
+              <!-- salons → klanten (voorbeelden) -->
+              <path d="M70 235 C 60 280, 45 320, 40 360" stroke="url(#line-grad)" stroke-width="1.2" fill="none" stroke-dasharray="2 4" />
+              <path d="M70 235 C 90 285, 110 330, 120 365" stroke="url(#line-grad)" stroke-width="1.2" fill="none" stroke-dasharray="2 4" />
+              <path d="M158 245 C 145 295, 145 340, 150 375" stroke="url(#line-grad)" stroke-width="1.2" fill="none" stroke-dasharray="2 4" />
+              <path d="M158 245 C 180 295, 200 340, 210 380" stroke="url(#line-grad)" stroke-width="1.2" fill="none" stroke-dasharray="2 4" />
+              <path d="M246 250 C 240 295, 245 340, 248 380" stroke="url(#line-grad)" stroke-width="1.2" fill="none" stroke-dasharray="2 4" />
+              <path d="M246 250 C 270 295, 290 340, 300 380" stroke="url(#line-grad)" stroke-width="1.2" fill="none" stroke-dasharray="2 4" />
+              <path d="M342 245 C 335 290, 340 335, 348 375" stroke="url(#line-grad)" stroke-width="1.2" fill="none" stroke-dasharray="2 4" />
+              <path d="M342 245 C 370 290, 395 330, 405 370" stroke="url(#line-grad)" stroke-width="1.2" fill="none" stroke-dasharray="2 4" />
+              <path d="M425 235 C 430 285, 450 325, 460 365" stroke="url(#line-grad)" stroke-width="1.2" fill="none" stroke-dasharray="2 4" />
+            </svg>
+
+            <!-- Hoofd-bubble: jouw merk -->
+            <span class="bubble network-node float-a delay-1" data-bubble="blob" style="--rot:-8deg; width:180px; height:180px; top:0; left:50%; transform:translateX(-50%);"></span>
+            <span class="network-label" style="top:175px; left:50%; transform:translateX(-50%);">Jouw merk</span>
+
+            <!-- Salons rij -->
+            <span class="bubble network-node float-b delay-2" data-bubble="heart" style="--rot:6deg; width:80px; height:72px; top:200px; left:8%;"></span>
+            <span class="bubble network-node float-c delay-3" data-bubble="thumb" style="--rot:-4deg; width:80px; height:80px; top:200px; left:26%;"></span>
+            <span class="bubble network-node float-a delay-4" data-bubble="arrow" style="--rot:10deg; width:84px; height:76px; top:198px; left:44%;"></span>
+            <span class="bubble network-node float-b delay-1" data-bubble="quote" style="--rot:-6deg; width:80px; height:80px; top:200px; left:62%;"></span>
+            <span class="bubble network-node float-c delay-2" data-bubble="heart" style="--rot:4deg; width:80px; height:72px; top:200px; right:6%;"></span>
+            <span class="network-label" style="top:288px; left:50%; transform:translateX(-50%);">Honderden salons</span>
+
+            <!-- Klanten rij -->
+            <span class="bubble network-node float-a delay-3" style="--rot:0deg; width:34px; height:34px; top:355px; left:5%; opacity:0.85;" data-bubble="blob"></span>
+            <span class="bubble network-node float-b delay-1" style="--rot:0deg; width:34px; height:34px; top:355px; left:18%; opacity:0.85;" data-bubble="blob"></span>
+            <span class="bubble network-node float-c delay-2" style="--rot:0deg; width:34px; height:34px; top:355px; left:31%; opacity:0.85;" data-bubble="blob"></span>
+            <span class="bubble network-node float-a delay-4" style="--rot:0deg; width:34px; height:34px; top:355px; left:44%; opacity:0.85;" data-bubble="blob"></span>
+            <span class="bubble network-node float-b delay-2" style="--rot:0deg; width:34px; height:34px; top:355px; left:57%; opacity:0.85;" data-bubble="blob"></span>
+            <span class="bubble network-node float-c delay-3" style="--rot:0deg; width:34px; height:34px; top:355px; left:70%; opacity:0.85;" data-bubble="blob"></span>
+            <span class="bubble network-node float-a delay-1" style="--rot:0deg; width:34px; height:34px; top:355px; left:83%; opacity:0.85;" data-bubble="blob"></span>
+            <span class="bubble network-node float-b delay-4" style="--rot:0deg; width:34px; height:34px; top:415px; left:11%; opacity:0.7;" data-bubble="blob"></span>
+            <span class="bubble network-node float-c delay-1" style="--rot:0deg; width:34px; height:34px; top:415px; left:25%; opacity:0.7;" data-bubble="blob"></span>
+            <span class="bubble network-node float-a delay-2" style="--rot:0deg; width:34px; height:34px; top:415px; left:39%; opacity:0.7;" data-bubble="blob"></span>
+            <span class="bubble network-node float-b delay-3" style="--rot:0deg; width:34px; height:34px; top:415px; left:53%; opacity:0.7;" data-bubble="blob"></span>
+            <span class="bubble network-node float-c delay-4" style="--rot:0deg; width:34px; height:34px; top:415px; left:67%; opacity:0.7;" data-bubble="blob"></span>
+            <span class="bubble network-node float-a delay-1" style="--rot:0deg; width:34px; height:34px; top:415px; left:81%; opacity:0.7;" data-bubble="blob"></span>
+            <span class="network-label" style="bottom:6px; left:50%; transform:translateX(-50%);">Hun klanten</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIEN REDENEN -->
+    <section class="reasons bg-paper">
+      <span class="bubble float-c delay-2" data-bubble="quote" data-parallax="0.12" style="--rot:-12deg; width:160px; height:160px; top:10%; right:-40px; opacity:0.5;"></span>
+
+      <div class="wrap">
+        <header class="reasons-head" data-reveal>
+          <span class="eyebrow">Tien redenen</span>
+          <h2 data-split>Waarom moet jouw merk zichtbaar zijn op BeautySocials?</h2>
+        </header>
+
+        <div class="reasons-grid">
+          <article class="reason reason-1" data-reveal>
+            <div class="reason-num">01</div>
+            <h3 class="reason-title">Direct zichtbaar bij honderden salons</h3>
+            <p class="reason-text">Jouw merk staat letterlijk in de contentbibliotheek van salons door heel Nederland.</p>
+          </article>
+
+          <article class="reason reason-2" data-reveal>
+            <div class="reason-num">02</div>
+            <h3 class="reason-title">Salons gebruiken jouw content actief</h3>
+            <p class="reason-text">Geen bereik dat je moet kopen, maar content die écht wordt geplaatst.</p>
+          </article>
+
+          <article class="reason reason-3" data-reveal>
+            <div class="reason-num">03</div>
+            <h3 class="reason-title">Aanbevolen door professionals</h3>
+            <p class="reason-text">Salons werken dagelijks met jouw producten en zetten ze in als kwaliteitssignaal.</p>
+          </article>
+
+          <article class="reason reason-4" data-reveal>
+            <div class="reason-num">04</div>
+            <h3 class="reason-title">Altijd on-brand zichtbaar</h3>
+            <p class="reason-text">Jij bepaalt de content, uitstraling en boodschap. Geen verrassingen, geen rommelige reposts.</p>
+          </article>
+
+          <article class="reason reason-5" data-reveal>
+            <div class="reason-num">05</div>
+            <h3 class="reason-title">Meer vertrouwen bij de eindklant</h3>
+            <p class="reason-text">Een advies van een vertrouwde salon weegt zwaarder dan een advertentie.</p>
+          </article>
+
+          <article class="reason reason-6" data-reveal>
+            <div class="reason-num">06</div>
+            <h3 class="reason-title">Geen advertentiebudget nodig</h3>
+            <p class="reason-text">Bereik zonder afhankelijk te zijn van dure ads of campagne-cycli.</p>
+          </article>
+
+          <article class="reason reason-7" data-reveal>
+            <div class="reason-num">07</div>
+            <h3 class="reason-title">Continu zichtbaar</h3>
+            <p class="reason-text">Jouw merk komt structureel terug in posts. Geen one-shot campagne.</p>
+          </article>
+
+          <article class="reason reason-8" data-reveal>
+            <div class="reason-num">08</div>
+            <h3 class="reason-title">Verhoogde productvraag in salons</h3>
+            <p class="reason-text">Klanten zien jouw merk vaker en vragen er sneller naar tijdens de behandeling.</p>
+          </article>
+
+          <article class="reason reason-9" data-reveal>
+            <div class="reason-num">09</div>
+            <h3 class="reason-title">Schaalbaar bereik</h3>
+            <p class="reason-text">Hoe meer salons aansluiten, hoe groter jouw impact.</p>
+          </article>
+
+          <article class="reason reason-10" data-reveal>
+            <div class="reason-num">10</div>
+            <h3 class="reason-title">Tijdwinst voor jouw marketingteam</h3>
+            <p class="reason-text">Eén keer content aanleveren, vervolgens verspreiding via tientallen kanalen tegelijk.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- WAT LEVERT HET OP -->
+    <section class="outcomes">
+      <span class="bubble float-a delay-1" data-bubble="blob" data-parallax="0.08" style="--rot:14deg; width:200px; height:200px; bottom:-60px; left:-60px; opacity:0.4;"></span>
+
+      <div class="wrap">
+        <header class="outcomes-head" data-reveal>
+          <span class="eyebrow">In het kort</span>
+          <h2 data-split>Meer zichtbaarheid. Meer vertrouwen. Meer vraag.</h2>
+        </header>
+
+        <div class="outcomes-list" data-reveal-stagger>
+          <div class="outcome">
+            <div class="outcome-bubble">
+              <span data-bubble="heart" style="--rot:-6deg;"></span>
+            </div>
+            <div class="outcome-text">Meer zichtbaarheid</div>
+          </div>
+          <div class="outcome">
+            <div class="outcome-bubble">
+              <span data-bubble="thumb" style="--rot:8deg;"></span>
+            </div>
+            <div class="outcome-text">Meer merkherkenning</div>
+          </div>
+          <div class="outcome">
+            <div class="outcome-bubble">
+              <span data-bubble="arrow" style="--rot:-4deg;"></span>
+            </div>
+            <div class="outcome-text">Meer vertrouwen via salons</div>
+          </div>
+          <div class="outcome">
+            <div class="outcome-bubble">
+              <span data-bubble="blob" style="--rot:10deg;"></span>
+            </div>
+            <div class="outcome-text">Meer vraag naar jouw producten</div>
+          </div>
+        </div>
+
+        <p class="outcomes-coda" data-reveal>Indirect: <strong>meer verkoop.</strong></p>
+      </div>
+    </section>
+
+    <!-- HOEVEEL SALONS -->
+    <section class="reach bg-blush">
+      <span class="bubble float-b delay-3" data-bubble="quote" data-parallax="0.1" style="--rot:-10deg; width:140px; height:140px; top:20%; right:5%; opacity:0.45;"></span>
+
+      <div class="wrap">
+        <div class="reach-grid">
+          <div class="reach-text" data-reveal>
+            <span class="eyebrow">Het bereik</span>
+            <h2 data-split>Hoeveel salons bereik ik?</h2>
+            <p>
+              Je bereikt direct een netwerk van salons die jouw content actief gebruiken richting hun klanten. Geen pixels, geen impressies. Posts die echt op iemands feed terechtkomen.
+            </p>
+            <p>
+              Wil je dit bereik vergroten? Dan heb je daar zelf invloed op. Door BeautySocials actief onder jouw salons te promoten, groeit jouw zichtbaarheid mee en schaalt het bereik snel op.
+            </p>
+            <p>
+              Hoe meer salons in jouw segment aanhaken, hoe sterker het effect. Het netwerk werkt voor je.
+            </p>
+          </div>
+
+          <div class="reach-figure" data-reveal>
+            <div class="reach-number">200<span style="color: var(--bs-pink-deep)">+</span></div>
+            <div class="reach-label">Actieve salons in het netwerk</div>
+            <div class="reach-bar" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <div class="reach-bar-meta" aria-hidden="true">
+              <span>Q3 ’24</span>
+              <span>Q1 ’26</span>
+            </div>
+            <div class="reach-trend">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                <polyline points="17 6 23 6 23 12"></polyline>
+              </svg>
+              Groeit met circa <strong style="color:var(--bs-pink); font-style:italic;">+15%</strong>&nbsp;per kwartaal
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT CTA -->
+    <section class="merken-cta">
+      <span class="bubble float-a delay-2" data-bubble="heart" data-parallax="0.12" style="--rot:-14deg; width:170px; height:170px; top:10%; left:8%; opacity:0.55;"></span>
+      <span class="bubble float-c delay-3" data-bubble="thumb" data-parallax="0.08" style="--rot:12deg; width:160px; height:160px; bottom:12%; right:10%; opacity:0.55;"></span>
+
+      <div class="wrap" data-reveal>
+        <h2 data-split>Benieuwd naar de mogelijkheden?</h2>
+        <p>Laat je gegevens achter en we nemen contact met je op. We laten zien hoe BeautySocials past bij de marketing van jouw merk.</p>
+        <a href="contact.html#merken" class="btn btn-primary" data-magnetic>
+          Plan een gesprek
+          <span class="btn-arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <span class="bubble footer-bubble float-c delay-2" data-bubble="blob" style="--rot:-12deg; width:140px; height:140px; top:-60px; right:8%; opacity:0.4;"></span>
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="index.html" aria-label="BeautySocials home">
+            <img class="brand-logo" src="assets/images/logo-bs-roze.png" alt="" />
+            <span class="brand-text" style="color: var(--paper);">beauty<br />socials</span>
+          </a>
+          <p>Dé social media tool voor jouw schoonheidssalon. Slimme posts, kant-en-klare inspiratie, in seconden online.</p>
+          <div class="socials" aria-label="Volg ons">
+            <a href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="#" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.27c-.97 0-1.75-.79-1.75-1.76s.78-1.76 1.75-1.76 1.75.79 1.75 1.76-.78 1.76-1.75 1.76zm13.5 12.27h-3v-5.6c0-1.34-.03-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97v5.7h-3v-11h2.88v1.5h.04c.4-.76 1.38-1.56 2.84-1.56 3.04 0 3.6 2 3.6 4.6v6.46z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h5>Site</h5>
+          <ul>
+            <li><a href="tarieven.html">Tarieven</a></li>
+            <li><a href="merken.html">Merken</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Contact</h5>
+          <ul>
+            <li>Vlierbes 15</li>
+            <li>7559 RM Hengelo</li>
+            <li><a href="mailto:info@beautysocials.nl">info@beautysocials.nl</a></li>
+            <li><a href="tel:+31742076000">+31 (0)74 207 6000</a></li>
+            <li><a href="tel:+31631682662">+31 (0)6 31 68 2662</a></li>
+            <li>Support: <a href="tel:+31742076001">+31 (0)74 207 6001</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Voorwaarden</h5>
+          <ul>
+            <li><a href="#">Algemene voorwaarden</a></li>
+            <li><a href="#">Privacyverklaring</a></li>
+            <li><a href="#">Disclaimer</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="one-liner">Mooi worden van posten. Daar zijn we voor.</p>
+        <span>© 2026 BeautySocials. Alle rechten voorbehouden.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>

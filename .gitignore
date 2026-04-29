@@ -1,0 +1,25 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+# Claude Code state
+.claude/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node / build artifacts (toekomstig)
+node_modules/
+dist/
+.parcel-cache/
+
+# Environment
+.env
+.env.local
