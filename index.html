@@ -111,19 +111,59 @@
             style="--rot:22deg; width:84px; height:84px; bottom:4%; left:-10%; z-index:6;"></span>
 
           <!-- Phone mockup -->
-          <div class="phone-frame" style="margin: 0 auto; transform: rotate(-3deg);">
+          <div class="phone-frame phone-frame--hero" style="margin: 0 auto;">
             <span class="phone-notch"></span>
-            <div class="phone-screen">
+            <div class="phone-screen feed-screen">
+              <div class="feed-status">
+                <span class="feed-status-mark">BS</span>
+                <span class="feed-status-dot"></span>
+                <span class="feed-status-label">Live planning</span>
+              </div>
               <div class="phone-grid">
-                <div class="phone-tile" style="background: linear-gradient(135deg, oklch(0.86 0.10 6), oklch(0.72 0.14 2));"></div>
-                <div class="phone-tile" style="background: linear-gradient(135deg, oklch(0.92 0.06 8), oklch(0.78 0.12 4));"></div>
-                <div class="phone-tile" style="background: linear-gradient(135deg, oklch(0.80 0.14 4), oklch(0.62 0.20 0));"></div>
-                <div class="phone-tile" style="background: linear-gradient(135deg, oklch(0.94 0.04 8), oklch(0.82 0.10 6));"></div>
-                <div class="phone-tile" style="background: linear-gradient(135deg, oklch(0.74 0.16 2), oklch(0.55 0.22 0));"></div>
-                <div class="phone-tile" style="background: linear-gradient(135deg, oklch(0.88 0.08 6), oklch(0.74 0.14 4));"></div>
-                <div class="phone-tile" style="background: linear-gradient(135deg, oklch(0.96 0.04 8), oklch(0.84 0.10 6));"></div>
-                <div class="phone-tile" style="background: linear-gradient(135deg, oklch(0.78 0.14 4), oklch(0.60 0.20 0));"></div>
-                <div class="phone-tile" style="background: linear-gradient(135deg, oklch(0.90 0.08 6), oklch(0.76 0.13 4));"></div>
+                <div class="phone-tile" data-tile="1" style="background: linear-gradient(135deg, oklch(0.92 0.06 8), oklch(0.78 0.12 4));">
+                  <span class="tile-icon" data-bubble="thumb"></span>
+                </div>
+                <div class="phone-tile" data-tile="2" style="background: linear-gradient(135deg, oklch(0.86 0.10 6), oklch(0.72 0.14 2));">
+                  <span class="tile-icon" data-bubble="heart"></span>
+                </div>
+                <div class="phone-tile" data-tile="3" style="background: linear-gradient(135deg, oklch(0.94 0.05 8), oklch(0.82 0.10 6));">
+                  <span class="tile-icon" data-bubble="plus"></span>
+                </div>
+                <div class="phone-tile" data-tile="4" style="background: linear-gradient(135deg, oklch(0.88 0.08 6), oklch(0.74 0.14 4));">
+                  <span class="tile-icon" data-bubble="quote"></span>
+                </div>
+                <div class="phone-tile is-feature" data-tile="5" style="background: linear-gradient(135deg, oklch(0.78 0.18 4), oklch(0.55 0.22 0));">
+                  <span class="tile-icon" data-bubble="heart"></span>
+                  <span class="tile-badge">Nieuw</span>
+                </div>
+                <div class="phone-tile" data-tile="6" style="background: linear-gradient(135deg, oklch(0.90 0.08 6), oklch(0.76 0.13 4));">
+                  <span class="tile-icon" data-bubble="arrow"></span>
+                </div>
+                <div class="phone-tile" data-tile="7" style="background: linear-gradient(135deg, oklch(0.96 0.04 8), oklch(0.84 0.10 6));">
+                  <span class="tile-icon" data-bubble="blob"></span>
+                </div>
+                <div class="phone-tile" data-tile="8" style="background: linear-gradient(135deg, oklch(0.84 0.12 4), oklch(0.66 0.18 2));">
+                  <span class="tile-icon" data-bubble="thumb"></span>
+                </div>
+                <div class="phone-tile" data-tile="9" style="background: linear-gradient(135deg, oklch(0.92 0.07 8), oklch(0.78 0.12 6));">
+                  <span class="tile-icon" data-bubble="plus"></span>
+                </div>
+              </div>
+              <div class="feed-queue">
+                <span class="feed-queue-thumb"></span>
+                <div class="feed-queue-info">
+                  <span class="feed-queue-tag">Vandaag · 14:00</span>
+                  <span class="feed-queue-cap">Lente-glow tip</span>
+                </div>
+                <span class="feed-queue-arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 6l6 6-6 6"/>
+                  </svg>
+                </span>
+              </div>
+              <div class="feed-foot">
+                <span class="feed-foot-dot"></span>
+                <span class="feed-foot-label">3 posts klaar voor vandaag</span>
               </div>
             </div>
           </div>
