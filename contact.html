@@ -252,6 +252,48 @@
       margin: 0;
     }
 
+    /* Honeypot · onzichtbaar voor mensen, zichtbaar voor bots */
+    .form-honeypot {
+      position: absolute !important;
+      left: -10000px !important;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    /* Submit-state · verstuurd, fout, etc. */
+    .form-status {
+      margin-top: var(--s-4);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      max-width: 56ch;
+      padding: var(--s-3) var(--s-4);
+      border-radius: 14px;
+      display: none;
+    }
+    .form-status[data-state="loading"] {
+      display: block;
+      color: var(--ink-soft);
+      background: var(--blush-100);
+    }
+    .form-status[data-state="success"] {
+      display: block;
+      color: oklch(0.40 0.16 145);
+      background: oklch(0.95 0.06 145 / 0.5);
+      box-shadow: inset 0 0 0 1px oklch(0.62 0.18 145 / 0.30);
+    }
+    .form-status[data-state="error"] {
+      display: block;
+      color: oklch(0.45 0.20 28);
+      background: oklch(0.95 0.05 28 / 0.5);
+      box-shadow: inset 0 0 0 1px oklch(0.65 0.20 28 / 0.30);
+    }
+
+    .form[data-submitting="true"] button[type="submit"] {
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
     /* Contact-blok rechts */
     .contact-block {
       position: sticky;
@@ -567,10 +609,9 @@
             <form
               id="trial"
               class="form"
-              action="mailto:arjan@iam-marketing.nl"
-              method="post"
-              enctype="text/plain"
+              data-form="contact"
               data-reveal-stagger
+              novalidate
             >
               <div class="form-row">
                 <div class="field">
@@ -673,15 +714,23 @@
                 <textarea id="bericht" name="Bericht" rows="5" placeholder="Schrijf hier waar we je mee mogen helpen…" required></textarea>
               </div>
 
+              <!-- Honeypot tegen botspam · niet voor mensen -->
+              <div class="form-honeypot" aria-hidden="true">
+                <label for="bevestiging">Laat dit veld leeg</label>
+                <input type="text" id="bevestiging" name="bevestiging" tabindex="-1" autocomplete="off" />
+              </div>
+
               <div class="form-actions">
                 <button type="submit" class="btn btn-primary" data-magnetic>
-                  Verstuur
+                  <span class="btn-label">Verstuur</span>
                   <span class="btn-arrow">→</span>
                 </button>
                 <p class="form-disclaimer">
                   We sturen geen nieuwsbrief en geen ongevraagde mail. Je gegevens gebruiken we alleen voor je vraag.
                 </p>
               </div>
+
+              <div class="form-status" data-form-status role="status" aria-live="polite"></div>
             </form>
           </div>
 
@@ -829,5 +878,107 @@
   </footer>
 
   <script src="assets/js/main.js" defer></script>
+
+  <!-- Contact-formulier · post naar Supabase -->
+  <script>
+    (function () {
+      const SUPABASE_URL = 'https://owlylbyjembocgxkjbao.supabase.co';
+      const SUPABASE_KEY = 'sb_publishable_CryPoxdNdIF6CXBUiA-_tQ_GrZOfDnA';
+
+      const form = document.getElementById('trial');
+      if (!form) return;
+      const status = form.querySelector('[data-form-status]');
+      const submit = form.querySelector('button[type="submit"]');
+      const submitLabel = submit && submit.querySelector('.btn-label');
+
+      const setStatus = (state, msg) => {
+        if (!status) return;
+        if (state) status.dataset.state = state; else delete status.dataset.state;
+        status.textContent = msg || '';
+      };
+
+      const trim = (v) => (v == null ? '' : String(v).trim());
+      const orNull = (v) => {
+        const t = trim(v);
+        return t.length ? t : null;
+      };
+
+      const collectSocials = () => {
+        const names = ['Instagram', 'Facebook', 'LinkedIn', 'TikTok', 'Geen'];
+        return names.filter((n) => {
+          const el = form.elements.namedItem(`Social-${n}`);
+          return el && el.checked;
+        });
+      };
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (form.dataset.submitting === 'true') return;
+
+        // Honeypot · gevuld = bot
+        const honeypot = form.elements.namedItem('bevestiging');
+        if (honeypot && honeypot.value) {
+          setStatus('success', 'Bedankt! Je bericht is verstuurd. We reageren binnen één werkdag.');
+          form.reset();
+          return;
+        }
+
+        // Native validatie (we hebben novalidate gezet voor custom UX)
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        const fd = new FormData(form);
+        const payload = {
+          voornaam: trim(fd.get('Voornaam')),
+          achternaam: trim(fd.get('Achternaam')),
+          email: trim(fd.get('E-mail')),
+          telefoon: orNull(fd.get('Telefoon')),
+          salon: trim(fd.get('Salon')),
+          adres: orNull(fd.get('Adres')),
+          postcode: orNull(fd.get('Postcode')),
+          plaats: orNull(fd.get('Plaats')),
+          merken: orNull(fd.get('Merken')),
+          socials: collectSocials(),
+          reden: orNull(fd.get('Reden')),
+          bericht: trim(fd.get('Bericht')),
+          source: 'contact',
+          user_agent: (navigator.userAgent || '').slice(0, 400),
+        };
+
+        form.dataset.submitting = 'true';
+        if (submit) submit.disabled = true;
+        if (submitLabel) submitLabel.textContent = 'Versturen…';
+        setStatus('loading', 'Bezig met versturen…');
+
+        try {
+          const res = await fetch(`${SUPABASE_URL}/rest/v1/contact_submissions`, {
+            method: 'POST',
+            headers: {
+              'apikey': SUPABASE_KEY,
+              'Authorization': `Bearer ${SUPABASE_KEY}`,
+              'Content-Type': 'application/json',
+              'Prefer': 'return=minimal',
+            },
+            body: JSON.stringify(payload),
+          });
+          if (!res.ok) {
+            const body = await res.text().catch(() => '');
+            throw new Error(`HTTP ${res.status} ${body.slice(0, 200)}`);
+          }
+          setStatus('success', 'Bedankt! Je bericht is verstuurd. We reageren binnen één werkdag.');
+          form.reset();
+        } catch (err) {
+          console.error('[contact] submit faalde:', err);
+          setStatus('error', 'Er ging iets mis bij het versturen. Probeer het opnieuw of mail rechtstreeks naar arjan@iam-marketing.nl.');
+        } finally {
+          form.dataset.submitting = 'false';
+          if (submit) submit.disabled = false;
+          if (submitLabel) submitLabel.textContent = 'Verstuur';
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
