@@ -402,13 +402,68 @@
 
           <div class="video-inner">
             <div class="video-screen">
-              <div class="video-mock">
-                <div class="video-mock-bar"></div>
-                <div class="video-mock-grid">
-                  <div class="video-mock-tile"></div>
-                  <div class="video-mock-tile alt"></div>
-                  <div class="video-mock-tile"></div>
-                  <div class="video-mock-tile alt"></div>
+              <div class="dash-mock">
+                <div class="dash-chrome">
+                  <span class="dash-traffic"></span>
+                  <span class="dash-traffic"></span>
+                  <span class="dash-traffic"></span>
+                  <div class="dash-url">
+                    <span class="dash-url-mark">BS</span>
+                    <span class="dash-url-text">app.beautysocials.nl<span class="dash-url-path">/planning</span></span>
+                  </div>
+                </div>
+
+                <div class="dash-content">
+                  <header class="dash-content-head">
+                    <div class="dash-content-title">
+                      <span class="dash-eyebrow">Planning · April</span>
+                      <h4 class="dash-title">Deze week <em>klaar</em></h4>
+                    </div>
+                    <div class="dash-content-stat">
+                      <span class="dash-stat-num">12</span>
+                      <span class="dash-stat-lbl">posts</span>
+                    </div>
+                  </header>
+
+                  <div class="dash-week">
+                    <div class="dash-day" data-dash-day="1"><span class="dash-day-l">Ma</span><span class="dash-day-n">14</span></div>
+                    <div class="dash-day is-active" data-dash-day="2"><span class="dash-day-l">Di</span><span class="dash-day-n">15</span></div>
+                    <div class="dash-day" data-dash-day="3"><span class="dash-day-l">Wo</span><span class="dash-day-n">16</span></div>
+                    <div class="dash-day" data-dash-day="4"><span class="dash-day-l">Do</span><span class="dash-day-n">17</span></div>
+                    <div class="dash-day" data-dash-day="5"><span class="dash-day-l">Vr</span><span class="dash-day-n">18</span></div>
+                    <div class="dash-day" data-dash-day="6"><span class="dash-day-l">Za</span><span class="dash-day-n">19</span></div>
+                    <div class="dash-day" data-dash-day="7"><span class="dash-day-l">Zo</span><span class="dash-day-n">20</span></div>
+                  </div>
+
+                  <div class="dash-grid">
+                    <article class="dash-card" data-dash-card="1">
+                      <div class="dash-card-thumb t-1"><span class="dash-card-icon" data-bubble="heart"></span></div>
+                      <div class="dash-card-meta">
+                        <span class="dash-card-tag">Inhaakkalender</span>
+                        <span class="dash-card-cap">Lente-glow tip</span>
+                        <span class="dash-card-time">Di · 14:00</span>
+                      </div>
+                      <span class="dash-card-status">Klaar</span>
+                    </article>
+                    <article class="dash-card is-published" data-dash-card="2">
+                      <div class="dash-card-thumb t-2"><span class="dash-card-icon" data-bubble="thumb"></span></div>
+                      <div class="dash-card-meta">
+                        <span class="dash-card-tag">Voor &amp; na</span>
+                        <span class="dash-card-cap">Highlights pakket</span>
+                        <span class="dash-card-time">Net gepost</span>
+                      </div>
+                      <span class="dash-card-pulse">Live</span>
+                    </article>
+                    <article class="dash-card" data-dash-card="3">
+                      <div class="dash-card-thumb t-3"><span class="dash-card-icon" data-bubble="plus"></span></div>
+                      <div class="dash-card-meta">
+                        <span class="dash-card-tag">Nieuwe collectie</span>
+                        <span class="dash-card-cap">Lakvrije gellak</span>
+                        <span class="dash-card-time">Do · 10:30</span>
+                      </div>
+                      <span class="dash-card-status">Concept</span>
+                    </article>
+                  </div>
                 </div>
               </div>
             </div>
@@ -852,29 +907,375 @@
       box-shadow: 0 12px 40px oklch(0.55 0.18 4 / 0.18);
       overflow: hidden;
     }
-    .video-mock {
+    /* Dashboard mockup binnen het video-frame */
+    .dash-mock {
       height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-    .video-mock-bar {
-      height: 12%;
-      background: linear-gradient(90deg, var(--blush-100), var(--blush-200));
-      border-bottom: 1px solid oklch(0.55 0.18 4 / 0.1);
-    }
-    .video-mock-grid {
-      flex: 1;
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: auto 1fr;
+      background:
+        radial-gradient(120% 80% at 50% -10%, oklch(0.97 0.02 8), transparent 60%),
+        var(--paper);
+    }
+
+    .dash-chrome {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 14px;
+      border-bottom: 1px solid oklch(0.55 0.18 4 / 0.10);
+      background: linear-gradient(180deg, oklch(0.98 0.01 8), oklch(0.96 0.02 8));
+    }
+    .dash-traffic {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: oklch(0.78 0.12 28);
+      box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.4);
+    }
+    .dash-traffic:nth-child(1) { background: oklch(0.72 0.18 28); }
+    .dash-traffic:nth-child(2) { background: oklch(0.82 0.16 80); }
+    .dash-traffic:nth-child(3) { background: oklch(0.76 0.16 145); }
+    .dash-url {
+      margin-left: auto;
+      margin-right: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 4px 14px 4px 4px;
+      background: var(--paper);
+      border-radius: 999px;
+      box-shadow:
+        0 1px 0 oklch(1 0 0 / 0.9) inset,
+        0 0 0 1px oklch(0.55 0.18 4 / 0.10),
+        0 4px 10px oklch(0.55 0.18 4 / 0.06);
+    }
+    .dash-url-mark {
+      display: grid;
+      place-items: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, oklch(0.78 0.18 4), oklch(0.55 0.22 0));
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 9px;
+      letter-spacing: -0.04em;
+      color: var(--paper);
+      box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.45);
+    }
+    .dash-url-text {
+      font: 600 10px/1 var(--font-body);
+      color: var(--ink);
+      letter-spacing: 0.005em;
+    }
+    .dash-url-path {
+      color: var(--bs-pink);
+    }
+
+    .dash-content {
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 14px;
+      padding: 16px 18px 18px;
+      min-height: 0;
+    }
+
+    .dash-content-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .dash-content-title { display: grid; gap: 4px; }
+    .dash-eyebrow {
+      font: 600 9px/1 var(--font-body);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--bs-pink);
+    }
+    .dash-title {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: clamp(1.05rem, 2.2vw, 1.45rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin: 0;
+      font-variation-settings: "opsz" 60, "SOFT" 60;
+    }
+    .dash-title em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--bs-pink);
+      font-variation-settings: "opsz" 96, "WONK" 1;
+    }
+    .dash-content-stat {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      padding: 8px 12px;
+      background: linear-gradient(135deg, oklch(0.96 0.04 8), oklch(0.92 0.06 6));
+      border-radius: 12px;
+      box-shadow:
+        inset 0 1px 0 oklch(1 0 0 / 0.6),
+        0 4px 10px oklch(0.55 0.18 4 / 0.08);
+    }
+    .dash-stat-num {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: -0.03em;
+      color: var(--bs-pink);
+      font-variation-settings: "opsz" 96;
+    }
+    .dash-stat-lbl {
+      font: 600 9px/1 var(--font-body);
+      color: var(--ink-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .dash-week {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+    .dash-day {
+      display: grid;
+      gap: 2px;
+      place-items: center;
+      padding: 6px 4px 7px;
+      border-radius: 9px;
+      background: oklch(0.97 0.02 8);
+      box-shadow: inset 0 0 0 1px oklch(0.55 0.18 4 / 0.06);
+    }
+    .dash-day-l {
+      font: 600 8px/1 var(--font-body);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-soft);
+    }
+    .dash-day-n {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--ink);
+      font-variation-settings: "opsz" 60;
+      line-height: 1;
+    }
+    .dash-day.is-active {
+      background: linear-gradient(135deg, oklch(0.78 0.18 4), oklch(0.55 0.22 0));
+      box-shadow:
+        inset 0 1px 0 oklch(1 0 0 / 0.45),
+        0 6px 14px oklch(0.55 0.20 4 / 0.35);
+      animation: dashDayPulse 3s ease-in-out infinite;
+    }
+    .dash-day.is-active .dash-day-l,
+    .dash-day.is-active .dash-day-n { color: var(--paper); }
+
+    @keyframes dashDayPulse {
+      0%, 100% { box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.45), 0 6px 14px oklch(0.55 0.20 4 / 0.35), 0 0 0 0 oklch(0.55 0.22 0 / 0.4); }
+      60%      { box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.45), 0 6px 14px oklch(0.55 0.20 4 / 0.35), 0 0 0 8px oklch(0.55 0.22 0 / 0); }
+    }
+
+    .dash-grid {
+      display: grid;
       gap: 8px;
-      padding: 12px;
+      align-content: start;
+      min-height: 0;
     }
-    .video-mock-tile {
-      background: linear-gradient(135deg, oklch(0.86 0.10 6), oklch(0.62 0.20 0));
-      border-radius: 8px;
+    .dash-card {
+      display: grid;
+      grid-template-columns: 56px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      background: var(--paper);
+      border-radius: 14px;
+      box-shadow:
+        0 1px 0 oklch(1 0 0 / 0.9) inset,
+        0 0 0 1px oklch(0.55 0.18 4 / 0.08),
+        0 6px 16px oklch(0.55 0.18 4 / 0.08);
+      position: relative;
     }
-    .video-mock-tile.alt {
-      background: linear-gradient(135deg, oklch(0.92 0.06 6), oklch(0.78 0.14 4));
+    .dash-card-thumb {
+      width: 56px;
+      height: 56px;
+      border-radius: 11px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, oklch(0.86 0.10 6), oklch(0.72 0.14 2));
+      box-shadow:
+        inset 0 1px 0 oklch(1 0 0 / 0.55),
+        inset 0 -3px 5px oklch(0.45 0.18 4 / 0.20);
+      position: relative;
+      overflow: hidden;
+    }
+    .dash-card-thumb::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 28% 22%, oklch(1 0 0 / 0.55), transparent 55%);
+      pointer-events: none;
+    }
+    .dash-card-thumb.t-1 { background: linear-gradient(135deg, oklch(0.82 0.16 4), oklch(0.55 0.22 0)); }
+    .dash-card-thumb.t-2 { background: linear-gradient(135deg, oklch(0.90 0.08 6), oklch(0.74 0.14 4)); }
+    .dash-card-thumb.t-3 { background: linear-gradient(135deg, oklch(0.86 0.12 8), oklch(0.66 0.18 4)); }
+    .dash-card-icon {
+      width: 60%;
+      height: 60%;
+      position: relative;
+      z-index: 1;
+      display: block;
+      filter: drop-shadow(0 3px 6px oklch(0.40 0.15 4 / 0.35));
+    }
+    .dash-card-icon svg { width: 100%; height: 100%; overflow: visible; }
+    .dash-card-meta {
+      display: grid;
+      gap: 3px;
+      min-width: 0;
+    }
+    .dash-card-tag {
+      font: 600 9px/1 var(--font-body);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--bs-pink);
+    }
+    .dash-card-cap {
+      font: 600 13px/1.2 var(--font-body);
+      color: var(--ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .dash-card-time {
+      font: 500 10px/1 var(--font-body);
+      color: var(--ink-soft);
+    }
+    .dash-card-status {
+      align-self: center;
+      font: 600 9px/1 var(--font-body);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-soft);
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: oklch(0.96 0.02 8);
+      box-shadow: inset 0 0 0 1px oklch(0.55 0.18 4 / 0.10);
+    }
+    .dash-card.is-published {
+      background: linear-gradient(135deg, oklch(0.99 0.01 8), oklch(0.95 0.04 6));
+      box-shadow:
+        0 1px 0 oklch(1 0 0 / 0.9) inset,
+        0 0 0 1px oklch(0.62 0.18 145 / 0.30),
+        0 8px 20px oklch(0.55 0.18 4 / 0.12);
+    }
+    .dash-card.is-published .dash-card-time {
+      color: oklch(0.50 0.18 145);
+      font-weight: 700;
+    }
+    .dash-card-pulse {
+      align-self: center;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font: 700 9px/1 var(--font-body);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--paper);
+      padding: 5px 9px 5px 8px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, oklch(0.62 0.20 145), oklch(0.50 0.22 145));
+      box-shadow:
+        inset 0 1px 0 oklch(1 0 0 / 0.4),
+        0 4px 10px oklch(0.55 0.18 145 / 0.40);
+    }
+    .dash-card-pulse::before {
+      content: "";
+      width: 6px; height: 6px;
+      border-radius: 999px;
+      background: var(--paper);
+      box-shadow: 0 0 0 0 oklch(1 0 0 / 0.7);
+      animation: dashLiveDot 1.4s ease-out infinite;
+    }
+    @keyframes dashLiveDot {
+      0%   { box-shadow: 0 0 0 0 oklch(1 0 0 / 0.7); }
+      70%  { box-shadow: 0 0 0 7px oklch(1 0 0 / 0); }
+      100% { box-shadow: 0 0 0 0 oklch(1 0 0 / 0); }
+    }
+
+    /* Entrance · staggered reveal wanneer .video-frame zichtbaar wordt */
+    .dash-mock .dash-chrome,
+    .dash-mock .dash-content-head,
+    .dash-mock .dash-day,
+    .dash-mock .dash-card {
+      opacity: 0;
+      translate: 0 12px;
+      transition:
+        opacity 700ms var(--ease-out),
+        translate 700ms var(--ease-out);
+    }
+    .video-frame.is-visible .dash-mock .dash-chrome { transition-delay: 0ms; opacity: 1; translate: 0 0; }
+    .video-frame.is-visible .dash-mock .dash-content-head { transition-delay: 180ms; opacity: 1; translate: 0 0; }
+
+    .video-frame.is-visible .dash-mock .dash-day[data-dash-day="1"] { transition-delay: 280ms; opacity: 1; translate: 0 0; }
+    .video-frame.is-visible .dash-mock .dash-day[data-dash-day="2"] { transition-delay: 320ms; opacity: 1; translate: 0 0; }
+    .video-frame.is-visible .dash-mock .dash-day[data-dash-day="3"] { transition-delay: 360ms; opacity: 1; translate: 0 0; }
+    .video-frame.is-visible .dash-mock .dash-day[data-dash-day="4"] { transition-delay: 400ms; opacity: 1; translate: 0 0; }
+    .video-frame.is-visible .dash-mock .dash-day[data-dash-day="5"] { transition-delay: 440ms; opacity: 1; translate: 0 0; }
+    .video-frame.is-visible .dash-mock .dash-day[data-dash-day="6"] { transition-delay: 480ms; opacity: 1; translate: 0 0; }
+    .video-frame.is-visible .dash-mock .dash-day[data-dash-day="7"] { transition-delay: 520ms; opacity: 1; translate: 0 0; }
+
+    .video-frame.is-visible .dash-mock .dash-card[data-dash-card="1"] { transition-delay: 600ms; opacity: 1; translate: 0 0; }
+    .video-frame.is-visible .dash-mock .dash-card[data-dash-card="2"] { transition-delay: 760ms; opacity: 1; translate: 0 0; }
+    .video-frame.is-visible .dash-mock .dash-card[data-dash-card="3"] { transition-delay: 920ms; opacity: 1; translate: 0 0; }
+
+    /* Doorlopende lift op de "is-published"-card */
+    .dash-mock .dash-card.is-published {
+      animation: dashCardLift 4.5s ease-in-out infinite;
+      animation-delay: 1400ms;
+    }
+    @keyframes dashCardLift {
+      0%, 100% { translate: 0 0; }
+      50%      { translate: 0 -3px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .dash-mock .dash-chrome,
+      .dash-mock .dash-content-head,
+      .dash-mock .dash-day,
+      .dash-mock .dash-card {
+        opacity: 1 !important;
+        translate: 0 0 !important;
+        transition: none !important;
+      }
+      .dash-mock .dash-card.is-published,
+      .dash-mock .dash-day.is-active,
+      .dash-card-pulse::before {
+        animation: none !important;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .dash-content { padding: 12px 12px 14px; gap: 10px; }
+      .dash-title { font-size: 1rem; }
+      .dash-stat-num { font-size: 1rem; }
+      .dash-stat-lbl { font-size: 8px; }
+      .dash-day { padding: 5px 2px 6px; }
+      .dash-day-n { font-size: 0.8rem; }
+      .dash-day-l { font-size: 7px; }
+      .dash-card { grid-template-columns: 44px 1fr auto; gap: 10px; padding: 8px 10px; }
+      .dash-card-thumb { width: 44px; height: 44px; border-radius: 9px; }
+      .dash-card-cap { font-size: 11px; }
+      .dash-card-tag, .dash-card-status, .dash-card-pulse { font-size: 8px; }
+      .dash-card-pulse { padding: 4px 7px 4px 6px; }
+      .dash-card-pulse::before { width: 5px; height: 5px; }
+      .dash-card-time { font-size: 9px; }
+      .dash-url-text { font-size: 9px; }
+      .dash-url-mark { width: 16px; height: 16px; font-size: 8px; }
+    }
+    @media (max-width: 520px) {
+      .dash-grid > .dash-card:nth-child(3) { display: none; }
+      .dash-content { gap: 8px; }
     }
     .video-play {
       position: relative;
