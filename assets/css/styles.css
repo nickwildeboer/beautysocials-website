@@ -94,6 +94,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h, 80px) + 1rem);
 }
 
 body {
@@ -160,15 +161,21 @@ h1, h2, h3, h4, h5 {
   font-weight: 500;
   font-style: italic;
   font-variation-settings: "opsz" 96, "SOFT" 100, "WONK" 1;
-  line-height: 1.02;
+  line-height: 1.08;
   letter-spacing: -0.015em;
   margin: 0 0 0.4em;
+  padding-bottom: 0.06em;
   color: var(--ink);
 }
 
-h1 { font-size: clamp(2.75rem, 7vw, 5.5rem); }
-h2 { font-size: clamp(2.25rem, 5.2vw, 3.75rem); }
-h3 { font-size: clamp(1.5rem, 2.4vw, 2rem); }
+blockquote {
+  line-height: 1.1;
+  padding-bottom: 0.08em;
+}
+
+h1 { font-size: clamp(2.25rem, 7vw, 5.5rem); text-wrap: balance; }
+h2 { font-size: clamp(2rem, 5.2vw, 3.75rem); text-wrap: balance; }
+h3 { font-size: clamp(1.4rem, 2.4vw, 2rem); }
 h4 { font-size: var(--fs-lg); }
 
 ::selection {
@@ -259,10 +266,15 @@ h4 { font-size: var(--fs-lg); }
   letter-spacing: 0.005em;
   border-radius: var(--r-md);
   cursor: pointer;
-  transition: transform var(--t-1) var(--ease-out), box-shadow var(--t-1) var(--ease-out), background var(--t-1) var(--ease-out);
+  transform: translate3d(var(--mx, 0px), var(--my, 0px), 0);
+  transition: transform 320ms var(--ease-out), box-shadow var(--t-1) var(--ease-out), background var(--t-1) var(--ease-out), color var(--t-1) var(--ease-out);
   white-space: nowrap;
   position: relative;
   isolation: isolate;
+}
+
+[data-magnetic] {
+  transition: transform 200ms var(--ease-out), box-shadow var(--t-1) var(--ease-out), background var(--t-1) var(--ease-out), color var(--t-1) var(--ease-out);
 }
 
 .btn-primary {
@@ -272,9 +284,14 @@ h4 { font-size: var(--fs-lg); }
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px) scale(1.015);
+  transform: translate3d(var(--mx, 0px), calc(var(--my, 0px) - 2px), 0) scale(1.015);
   box-shadow: var(--shadow-3), 0 0 50px oklch(0.62 0.23 358 / 0.45), inset 0 1px 0 oklch(1 0 0 / 0.22);
   color: var(--paper);
+}
+
+.btn-primary:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-3), 0 0 0 3px oklch(0.62 0.23 358 / 0.4), inset 0 1px 0 oklch(1 0 0 / 0.22);
 }
 
 .btn-ghost {
@@ -286,7 +303,12 @@ h4 { font-size: var(--fs-lg); }
 .btn-ghost:hover {
   background: var(--ink);
   color: var(--paper);
-  transform: translateY(-2px);
+  transform: translate3d(var(--mx, 0px), calc(var(--my, 0px) - 2px), 0);
+}
+
+.btn-ghost:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px oklch(0.62 0.23 358 / 0.35);
 }
 
 .btn-pill {
@@ -298,6 +320,29 @@ h4 { font-size: var(--fs-lg); }
 }
 
 .btn-pill:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* Combinaties: kleur en border opnieuw asserten zodat .btn-pill
+   de varianten niet platslaat. */
+.btn-primary.btn-pill {
+  background: var(--bs-pink);
+  color: var(--paper);
+  border-color: transparent;
+}
+.btn-primary.btn-pill:hover {
+  background: var(--bs-pink-deep);
+  color: var(--paper);
+  border-color: transparent;
+}
+
+.btn-ghost.btn-pill {
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--ink);
+}
+.btn-ghost.btn-pill:hover {
   background: var(--ink);
   color: var(--paper);
 }
@@ -574,22 +619,25 @@ body.menu-open { overflow: hidden; }
   pointer-events: none;
   filter: drop-shadow(0 22px 40px oklch(0.55 0.18 4 / 0.32));
   will-change: transform;
+  rotate: var(--rot, 0deg);
+  translate: 0 0;
 }
 
 .bubble svg { overflow: visible; }
 
-/* Floating loops — verschillende phase per bubble */
+/* Floating loops — gebruiken aparte translate/rotate properties
+   zodat parallax (transform) onafhankelijk kan stapelen. */
 @keyframes floatA {
-  0%, 100% { transform: translate3d(0, 0, 0) rotate(var(--rot, 0deg)); }
-  50%      { transform: translate3d(0, -22px, 0) rotate(calc(var(--rot, 0deg) + 4deg)); }
+  0%, 100% { translate: 0 0; rotate: var(--rot, 0deg); }
+  50%      { translate: 0 -22px; rotate: calc(var(--rot, 0deg) + 4deg); }
 }
 @keyframes floatB {
-  0%, 100% { transform: translate3d(0, 0, 0) rotate(var(--rot, 0deg)); }
-  50%      { transform: translate3d(8px, -16px, 0) rotate(calc(var(--rot, 0deg) - 5deg)); }
+  0%, 100% { translate: 0 0; rotate: var(--rot, 0deg); }
+  50%      { translate: 8px -16px; rotate: calc(var(--rot, 0deg) - 5deg); }
 }
 @keyframes floatC {
-  0%, 100% { transform: translate3d(0, 0, 0) rotate(var(--rot, 0deg)); }
-  50%      { transform: translate3d(-10px, -28px, 0) rotate(calc(var(--rot, 0deg) + 6deg)); }
+  0%, 100% { translate: 0 0; rotate: var(--rot, 0deg); }
+  50%      { translate: -10px -28px; rotate: calc(var(--rot, 0deg) + 6deg); }
 }
 
 .bubble.float-a { animation: floatA 7s ease-in-out infinite; }
@@ -675,13 +723,15 @@ body.menu-open { overflow: hidden; }
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 400;
-  font-size: clamp(2rem, 5.5vw, 4.25rem);
-  line-height: 1.05;
+  font-size: clamp(1.85rem, 5.5vw, 4.25rem);
+  line-height: 1.1;
   letter-spacing: -0.02em;
   font-variation-settings: "opsz" 96, "SOFT" 100, "WONK" 1;
   margin: 0 auto;
   max-width: 22ch;
+  padding: 0.1em 0.15em 0.15em;
   color: var(--ink);
+  text-wrap: balance;
 }
 
 .statement blockquote .glow {
@@ -1227,16 +1277,10 @@ body.menu-open { overflow: hidden; }
 }
 
 .page-wipe.is-leaving { animation: wipeIn 0.55s var(--ease-out) forwards; }
-.page-wipe.is-arriving { animation: wipeOut 0.55s var(--ease-out) forwards; }
 
 @keyframes wipeIn {
   from { transform: translateY(100%); }
   to   { transform: translateY(0); }
-}
-
-@keyframes wipeOut {
-  from { transform: translateY(0); }
-  to   { transform: translateY(-100%); }
 }
 
 .page-wipe-mark {
@@ -1250,23 +1294,65 @@ body.menu-open { overflow: hidden; }
 }
 
 /* ============================================================
-   Reveal animations (GSAP-targeted, JS schakelt visible toe)
+   Toast — placeholder-clicks
    ============================================================ */
 
-[data-reveal] {
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--r-pill);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.92rem;
+  box-shadow: var(--shadow-3);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 220;
+  transition: opacity 320ms var(--ease-out), transform 320ms var(--ease-out);
+  max-width: calc(100vw - 32px);
+  text-align: center;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ============================================================
+   Reveal animations — JS schakelt is-visible toe
+   Pre-hide alleen wanneer JS gedetecteerd is (`.js` op <html>)
+   zodat no-script gebruikers alles meteen zien.
+   ============================================================ */
+
+.js [data-reveal] {
   opacity: 0;
   transform: translate3d(0, 28px, 0);
   transition: opacity 1s var(--ease-out), transform 1s var(--ease-out);
 }
 
-[data-reveal].is-visible {
+.js [data-reveal].is-visible {
   opacity: 1;
   transform: translate3d(0, 0, 0);
 }
 
-[data-reveal-stagger] > * {
+.js [data-reveal-stagger] > * {
   opacity: 0;
   transform: translate3d(0, 24px, 0);
+}
+
+/* Hero-elementen worden door JS gechoreografeerd. Voor JS-users
+   pre-hiden om FOUC te voorkomen. */
+.js [data-hero-eyebrow],
+.js [data-hero-lead],
+.js [data-hero-cta],
+.js [data-hero-meta],
+.js [data-hero-visual] {
+  opacity: 0;
 }
 
 .split-line {
@@ -1274,10 +1360,15 @@ body.menu-open { overflow: hidden; }
   overflow: hidden;
 }
 
+/* Italic Fraunces heeft descenders en flourishes die buiten de
+   bounding box steken. Geef ruimte boven en onder, en compenseer
+   met negatieve marge zodat de regel-spacing klopt. */
 .split-word {
   display: inline-block;
   overflow: hidden;
   vertical-align: top;
+  padding: 0.18em 0.04em 0.22em;
+  margin: -0.18em -0.04em -0.22em;
 }
 
 .split-word-inner {
@@ -1294,6 +1385,12 @@ body.menu-open { overflow: hidden; }
   transform: translate3d(0, 0, 0);
 }
 
+/* Eenmaal onthuld geen overflow meer nodig — italic flourishes
+   en descenders mogen weer zichtbaar zijn. */
+.split-revealed .split-word {
+  overflow: visible;
+}
+
 /* ============================================================
    Reduced motion
    ============================================================ */
@@ -1306,8 +1403,13 @@ body.menu-open { overflow: hidden; }
     scroll-behavior: auto !important;
   }
 
-  [data-reveal],
-  [data-reveal-stagger] > * {
+  .js [data-reveal],
+  .js [data-reveal-stagger] > *,
+  .js [data-hero-eyebrow],
+  .js [data-hero-lead],
+  .js [data-hero-cta],
+  .js [data-hero-meta],
+  .js [data-hero-visual] {
     opacity: 1 !important;
     transform: none !important;
   }
@@ -1347,4 +1449,162 @@ body.menu-open { overflow: hidden; }
   display: block;
   width: 100%;
   height: 80px;
+}
+
+/* ============================================================
+   Mobiele optimalisatie
+   ============================================================ */
+
+/* Tablet en kleiner */
+@media (max-width: 960px) {
+  .wrap, .wrap-tight { padding: 0 var(--s-4); }
+
+  .section { padding: var(--s-8) 0; }
+  .section-tight { padding: var(--s-7) 0; }
+  .section-loose { padding: var(--s-9) 0; }
+
+  .hero,
+  .tarieven-hero,
+  .merken-hero,
+  .faq-hero,
+  .contact-hero,
+  .team-hero {
+    padding: calc(var(--header-h, 80px) + var(--s-7)) 0 var(--s-9) !important;
+  }
+
+  .brand-logo { width: 44px; }
+  .brand-text { font-size: 1.3rem; }
+
+  .nav-cta { gap: var(--s-2); }
+
+  .footer-grid { gap: var(--s-5); }
+}
+
+/* Phone */
+@media (max-width: 640px) {
+  :root {
+    --s-9: 4rem;
+    --s-10: 5rem;
+    --s-11: 6rem;
+  }
+
+  body { font-size: 0.97rem; }
+
+  .wrap, .wrap-tight { padding: 0 var(--s-4); }
+
+  .section { padding: var(--s-7) 0; }
+  .section-tight { padding: var(--s-6) 0; }
+  .section-loose { padding: var(--s-8) 0; }
+
+  .hero,
+  .tarieven-hero,
+  .merken-hero,
+  .faq-hero,
+  .contact-hero,
+  .team-hero {
+    padding: calc(var(--header-h, 72px) + var(--s-6)) 0 var(--s-7) !important;
+  }
+
+  .hero h1 { font-size: clamp(2.25rem, 9vw, 3.5rem); }
+  .hero p.lead { font-size: 1.025rem; }
+
+  .hero-cta { gap: var(--s-3); width: 100%; }
+  .hero-cta .btn { width: 100%; justify-content: center; }
+  .hero-cta .btn-ghost { background: oklch(1 0 0 / 0.55); }
+
+  .hero-meta {
+    gap: var(--s-3);
+    font-size: 0.83rem;
+  }
+  .hero-meta span {
+    flex: 1 1 auto;
+    min-width: 30%;
+  }
+
+  .hero-visual { aspect-ratio: 1 / 1.05; max-width: 360px; }
+  .phone-frame { max-width: 240px; }
+
+  /* Header krimpen */
+  .site-header { padding: var(--s-3) 0; }
+  .nav-toggle { width: 40px; height: 40px; }
+  .btn-icon { width: 40px; height: 40px; }
+
+  /* Ankerpijl achter brand verbergen op zeer smalle schermen */
+
+  /* Tarieven kaarten */
+  .tarief { padding: var(--s-5) var(--s-5); }
+  .tarief-name { font-size: 2rem; }
+  .tarief-price-amount { font-size: 2.6rem; }
+
+  .tarief.is-featured {
+    transform: none;
+  }
+  .tarief.is-featured:hover {
+    transform: translateY(-4px);
+  }
+
+  /* FAQ */
+  .faq-summary {
+    padding: var(--s-4) var(--s-5);
+    font-size: 1.1rem;
+    grid-template-columns: 1fr 28px;
+  }
+  .faq-toggle { width: 28px; height: 28px; }
+  .faq-body {
+    padding: 0 var(--s-5) var(--s-5);
+    font-size: 0.97rem;
+  }
+
+  /* Marquee partner-strip */
+  .partner-strip { padding: var(--s-6) 0; }
+  .marquee { gap: var(--s-5); animation-duration: 28s; }
+  .marquee-item {
+    font-size: 1.5rem;
+    gap: var(--s-5);
+  }
+
+  /* Statement quote */
+  .statement { padding: var(--s-8) 0; }
+  .statement blockquote {
+    font-size: clamp(1.85rem, 9vw, 2.85rem);
+    max-width: 18ch;
+  }
+
+  /* Footer */
+  .footer-grid { grid-template-columns: 1fr; gap: var(--s-5); }
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--s-2);
+  }
+
+  /* Bubble-decor minder dominant op mobiel */
+  .bubble[data-parallax] {
+    opacity: 0.18 !important;
+  }
+  .hero .bubble:not([data-parallax]) {
+    transform: scale(0.7);
+  }
+
+  /* Form */
+  .form { gap: var(--s-4); }
+}
+
+/* Touch-devices: geen idle bubble-loops voor batterij */
+@media (hover: none) and (pointer: coarse) {
+  .bubble.float-a,
+  .bubble.float-b,
+  .bubble.float-c {
+    animation-duration: 14s, 16s, 18s;
+  }
+}
+
+/* Reduced-motion: bubble-loops uit */
+@media (prefers-reduced-motion: reduce) {
+  .bubble.float-a,
+  .bubble.float-b,
+  .bubble.float-c,
+  .marquee {
+    animation: none !important;
+  }
 }

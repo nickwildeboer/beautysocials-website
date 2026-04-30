@@ -203,11 +203,17 @@
 
   /* ----------------------------------------------------------
      IntersectionObserver — globale reveal
+     Hero-elementen worden door heroEntrance() afgehandeld en
+     overgeslagen om dubbele triggers te voorkomen.
      ---------------------------------------------------------- */
   function observe() {
+    const isHeroChild = (el) => !!el.closest('[data-hero-enter]');
+
     if (reduced) {
       $$('[data-reveal]').forEach((el) => el.classList.add('is-visible'));
-      $$('[data-split]').forEach((el) => revealSplit(el));
+      $$('[data-split]').forEach((el) => {
+        if (!isHeroChild(el)) revealSplit(el);
+      });
       return;
     }
 
@@ -235,10 +241,13 @@
           io.unobserve(el);
         });
       },
-      { threshold: 0.18, rootMargin: '0px 0px -80px 0px' }
+      { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
     );
 
-    $$('[data-reveal], [data-split], [data-reveal-stagger]').forEach((el) => io.observe(el));
+    $$('[data-reveal], [data-split], [data-reveal-stagger]').forEach((el) => {
+      if (isHeroChild(el)) return;
+      io.observe(el);
+    });
   }
 
   /* ----------------------------------------------------------
@@ -297,6 +306,8 @@
 
   /* ----------------------------------------------------------
      Page transitions — wipe op interne links
+     De wipe verschijnt alleen wanneer de gebruiker daadwerkelijk
+     navigeert. Geen cold-load flash meer.
      ---------------------------------------------------------- */
   function pageTransitions() {
     if (reduced) return;
@@ -304,14 +315,6 @@
     wipe.className = 'page-wipe';
     wipe.innerHTML = `<span class="page-wipe-mark">BS</span>`;
     document.body.appendChild(wipe);
-
-    requestAnimationFrame(() => {
-      wipe.classList.add('is-arriving');
-      setTimeout(() => {
-        wipe.classList.remove('is-arriving');
-        wipe.style.transform = 'translateY(-100%)';
-      }, 600);
-    });
 
     const internal = (a) => {
       if (!a.href) return false;
@@ -321,19 +324,24 @@
       if (a.hasAttribute('download')) return false;
       if (a.dataset.noTransition === 'true') return false;
       if (url.pathname === location.pathname) return false;
+      const proto = url.protocol;
+      if (proto !== 'http:' && proto !== 'https:') return false;
       return true;
     };
 
     document.addEventListener('click', (e) => {
       const a = e.target.closest('a');
       if (!a || !internal(a)) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
       e.preventDefault();
-      wipe.style.transform = 'translateY(100%)';
-      wipe.classList.remove('is-arriving');
-      requestAnimationFrame(() => {
-        wipe.classList.add('is-leaving');
-        setTimeout(() => { window.location.href = a.href; }, 540);
-      });
+      wipe.classList.add('is-leaving');
+      setTimeout(() => { window.location.href = a.href; }, 540);
+    });
+
+    window.addEventListener('pageshow', (e) => {
+      if (e.persisted) {
+        wipe.classList.remove('is-leaving');
+      }
     });
   }
 
@@ -371,18 +379,23 @@
 
   /* ----------------------------------------------------------
      Magnetic buttons — lichte attractie naar cursor
+     Schrijft naar CSS-variabelen zodat hover-/focus-transforms
+     niet overschreven worden.
      ---------------------------------------------------------- */
   function magnetic() {
     if (reduced) return;
+    if (window.matchMedia('(hover: none)').matches) return;
     $$('[data-magnetic]').forEach((el) => {
       el.addEventListener('mousemove', (e) => {
         const rect = el.getBoundingClientRect();
         const x = e.clientX - rect.left - rect.width / 2;
         const y = e.clientY - rect.top - rect.height / 2;
-        el.style.transform = `translate3d(${x * 0.18}px, ${y * 0.22}px, 0)`;
+        el.style.setProperty('--mx', `${x * 0.18}px`);
+        el.style.setProperty('--my', `${y * 0.22}px`);
       });
       el.addEventListener('mouseleave', () => {
-        el.style.transform = '';
+        el.style.setProperty('--mx', '0px');
+        el.style.setProperty('--my', '0px');
       });
     });
   }
@@ -404,19 +417,114 @@
   }
 
   /* ----------------------------------------------------------
+     Smooth scroll voor hash-links naar huidige pagina + placeholder-links
+     ---------------------------------------------------------- */
+  function anchorClicks() {
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('a[href]');
+      if (!a) return;
+      const href = a.getAttribute('href');
+      if (!href) return;
+
+      if (href === '#') {
+        if (a.dataset.placeholder !== undefined || a.classList.contains('is-placeholder')) {
+          e.preventDefault();
+          showToast(a.dataset.placeholderMessage || 'Komt binnenkort online.');
+        }
+        return;
+      }
+
+      let url;
+      try { url = new URL(href, location.href); } catch (_) { return; }
+      if (url.origin !== location.origin) return;
+      if (url.pathname !== location.pathname) return;
+      if (!url.hash) return;
+
+      const id = url.hash.slice(1);
+      const target = document.getElementById(id);
+      if (!target) return;
+
+      e.preventDefault();
+      const header = document.querySelector('.site-header');
+      const offset = (header ? header.offsetHeight : 0) + 16;
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: reduced ? 'auto' : 'smooth' });
+      history.replaceState(null, '', `#${id}`);
+    });
+  }
+
+  /* ----------------------------------------------------------
+     Toast — minimale notice voor placeholder-clicks
+     ---------------------------------------------------------- */
+  let toastEl = null;
+  let toastTimer = 0;
+  function showToast(msg) {
+    if (!toastEl) {
+      toastEl = document.createElement('div');
+      toastEl.className = 'toast';
+      toastEl.setAttribute('role', 'status');
+      toastEl.setAttribute('aria-live', 'polite');
+      document.body.appendChild(toastEl);
+    }
+    toastEl.textContent = msg;
+    toastEl.classList.add('is-visible');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      toastEl.classList.remove('is-visible');
+    }, 2400);
+  }
+
+  /* ----------------------------------------------------------
+     Vul --header-h zodat secties zonder hero geen overlap krijgen
+     ---------------------------------------------------------- */
+  function headerHeightVar() {
+    const header = $('.site-header');
+    if (!header) return;
+    const set = () => {
+      document.documentElement.style.setProperty('--header-h', `${header.offsetHeight}px`);
+    };
+    set();
+    window.addEventListener('resize', set, { passive: true });
+  }
+
+  /* ----------------------------------------------------------
+     Bij landing op een hash (bijv. contact.html#trial) corrigeer
+     de scroll-positie zodat het anker niet onder de fixed header
+     valt.
+     ---------------------------------------------------------- */
+  function landingHashOffset() {
+    const hash = location.hash;
+    if (!hash || hash === '#') return;
+    const id = hash.slice(1);
+    const target = document.getElementById(id);
+    if (!target) return;
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        const header = $('.site-header');
+        const offset = (header ? header.offsetHeight : 0) + 16;
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: 'auto' });
+      }, 80);
+    });
+  }
+
+  /* ----------------------------------------------------------
      Boot
      ---------------------------------------------------------- */
   function boot() {
     renderBubbles();
     splitTitles();
+    headerHeightVar();
     header();
     mobileMenu();
-    observe();
     heroEntrance();
+    observe();
     parallax();
     magnetic();
     faq();
+    anchorClicks();
     pageTransitions();
+    landingHashOffset();
   }
 
   if (document.readyState === 'loading') {
